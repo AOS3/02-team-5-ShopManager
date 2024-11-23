@@ -34,4 +34,12 @@ interface ProductDAO {
     // 상품 하나의 정보를 수정하는 메서드
     @Update
     fun updateProductData(productVO: ProductVO)
+
+    // 이름으로 상품을 검색하는 메서드
+    // LIKE 연산자 특정 문자가 포함되어 있는 값을 조회
+    @Query("""
+        select * from ProductTable
+        where name like :productName
+        order by id desc""")
+    fun searchProductByName(productName: String) : List<ProductVO>
 }

@@ -15,6 +15,9 @@ class ProductRepository {
         // ViewModel 에 있는 데이터를 VO에 담아준다.
         TODO()
 
+        val productVO = TODO()
+        // 상품 정보를 저장한다.
+        productDatabase?.productDAO()?.insertProductData(productVO)
     }
 
     // 상품 정보 전체를 가져오는 메서드
@@ -26,10 +29,14 @@ class ProductRepository {
         // 상품 데이터를 담을 리스트
         val productModelList = mutableListOf<ProductModel>()
 
-        // 상품 데이터를 추출하고 객체에 담는다.
-        // productModelList에 객체를 추가하여
-        // productModelList를 반환한다.
-        TODO()
+        productVoList?.forEach{
+            // 상품 데이터를 추출하고 객체에 담는다.
+            // productModelList에 객체를 추가하여
+            // productModelList를 반환한다.
+            TODO()
+        }
+
+        return productModelList
     }
 
     // 선택한 상품 하나의 정보를 가져오는 메서드
@@ -39,8 +46,13 @@ class ProductRepository {
         // DB에서 상품 하나의 정보를 가져온다.
         val productVO = productDatabase?.productDAO()?.selectProductDataById(id)
 
-        // 객체에 데이터를 담고 객체를 반환한다.
+        // 객체에 데이터를 담는다.
         TODO()
+
+
+        val productModel = TODO()
+        // 객체를 반환한다.
+        return productModel
     }
 
     // 상품 하나의 정보 삭제
@@ -49,7 +61,7 @@ class ProductRepository {
         val productDatabase = ProductDatabase.getInstance(context)
         // 삭제할 상품 번호를 담고 있는 객체를 생성한다.
         val productVO = ProductVO(id = id)
-        // 삭제한다.
+        // 상품 하나를 삭제한다.
         productDatabase?.productDAO()?.deleteProductData(productVO)
     }
 
@@ -58,7 +70,33 @@ class ProductRepository {
         // 데이터 베이스 객체를 가져온다
         val productDatabase = ProductDatabase.getInstance(context)
 
-        // VO에 객체를 담아주고 수정한다.
+        // VO에 객체를 담아준다.
         TODO()
+
+        val productVO = TODO()
+        // 상품 정보를 수정한다.
+        productDatabase?.productDAO()?.updateProductData(productVO)
+    }
+
+    // 이름으로 상품을 검색하는 메서드
+    fun searchProductByName(context: Context, productName:String):MutableList<ProductModel>{
+        // 데이터 베이스 객체를 가져온다.
+        val productDatabase = ProductDatabase.getInstance(context)
+        // 검색결과를 가져옵니다.
+        val productVoList = productDatabase?.productDAO()?.searchProductByName("%$productName%")
+        // 상품 데이터를 담을 리스트
+        val productModelList = mutableListOf<ProductModel>()
+
+        // 검색 결과가 있을 경우
+        productVoList?.forEach{
+            // 검색된 상품 데이터를 추출한다.
+            TODO()
+            // 객체에 담는다.
+            val productModel = TODO()
+            // productModelList에 객체를 담는다.
+            productModelList.add(productModel)
+        }
+        // productModelList를 반환한다.
+        return productModelList
     }
 }
