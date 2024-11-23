@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">ShopManager</string>
+    <string name="hint_product_name_text">상품명을 등록해주세요</string>
+    <string name="label_product_name">상품명</string>
+    <string name="hint_product_description_text">상품 설명을 등록해주세요</string>
+    <string name="label_product_description">설명</string>
+    <string name="label_product_stock">재고 수량</string>
+    <string name="hint_product_stock_text">재고</string>
+    <string name="label_product_type">카테고리</string>
+    <string name="button_product_add_text">상품등록</string>
+    <string name="label_product_add_description">굿즈의 사진을 등록해주세요.</string>
+    <string name="chip_disney">디즈니</string>
+    <string name="chip_pixar">픽사</string>
+    <string name="chip_marvel">마블</string>
+    <string name="chip_harry_potter">해리포터</string>
 </resources>
