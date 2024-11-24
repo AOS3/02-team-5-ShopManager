@@ -11,7 +11,7 @@ import com.lion.five.shopmanager.data.vo.ProductVO
 interface ProductDAO {
     // 상품 정보 저장
     @Insert
-    fun insertProductData(productDAO: ProductDAO)
+    fun insertProductData(productVO: ProductVO)
 
     // 상품 정보를 가져오는 메서드
     @Query("""
