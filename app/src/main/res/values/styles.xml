@@ -9,8 +9,7 @@
 
     <style name="AppRoundedImage">
         <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">6dp</item>
-        <item name="android:scaleType">centerCrop</item>
+        <item name="cornerSize">8dp</item>
     </style>
 
     <style name="AppChipStyle" parent="Widget.MaterialComponents.Chip.Choice">

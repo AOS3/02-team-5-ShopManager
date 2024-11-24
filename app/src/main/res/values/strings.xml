@@ -17,4 +17,5 @@
     <string name="label_product_best">BEST</string>
     <string name="label_edit">수정</string>
     <string name="label_delete">삭제</string>
+    <string name="label_product_price">가격</string>
 </resources>

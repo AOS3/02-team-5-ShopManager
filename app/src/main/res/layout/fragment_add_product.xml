@@ -69,7 +69,7 @@
         <View
             android:id="@+id/view_add_product_image"
             android:layout_width="0dp"
-            android:layout_height="105dp"
+            android:layout_height="92dp"
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/background_gray100"
@@ -89,7 +89,7 @@
             app:layout_constraintEnd_toEndOf="@id/view_add_product_image"
             app:layout_constraintStart_toStartOf="@id/view_add_product_image"
             app:layout_constraintTop_toTopOf="@id/view_add_product_image"
-            app:layout_constraintVertical_bias="0.4" />
+            app:layout_constraintVertical_bias="0.3" />
 
         <TextView
             android:id="@+id/tv_product_add_description"
@@ -102,16 +102,45 @@
             app:layout_constraintStart_toStartOf="@id/view_add_product_image"
             app:layout_constraintTop_toBottomOf="@id/iv_product_add_image" />
 
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/group_add_more_product_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            app:constraint_referenced_ids="iv_add_product_image_view,iv_add_product_image_plus, rv_product_image_list" />
+
+        <ImageView
+            android:id="@+id/iv_add_product_image_view"
+            android:layout_width="92dp"
+            android:layout_height="0dp"
+            android:background="@drawable/background_stroke_gray200"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@id/view_add_product_image"
+            app:layout_constraintStart_toStartOf="@id/view_add_product_image"
+            app:layout_constraintTop_toTopOf="@id/view_add_product_image" />
+
+        <ImageView
+            android:id="@+id/iv_add_product_image_plus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_add"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_add_product_image_view"
+            app:layout_constraintEnd_toEndOf="@+id/iv_add_product_image_view"
+            app:layout_constraintStart_toStartOf="@+id/iv_add_product_image_view"
+            app:layout_constraintTop_toTopOf="@+id/iv_add_product_image_view" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_product_image_list"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_marginStart="12dp"
             android:orientation="horizontal"
             android:visibility="invisible"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="@id/view_add_product_image"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@id/view_add_product_image"
+            app:layout_constraintStart_toEndOf="@id/iv_add_product_image_view"
             app:layout_constraintTop_toTopOf="@id/view_add_product_image"
             tools:listitem="@layout/item_product_image" />
 
@@ -149,16 +178,53 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
+            android:id="@+id/tv_product_price_label"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="4dp"
+            android:text="@string/label_product_price"
+            android:textColor="@color/gray_800"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toStartOf="@id/tv_product_stock_label"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tf_product_description" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tf_product_price"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:background="@android:color/transparent"
+            app:hintEnabled="false"
+            app:layout_constraintEnd_toEndOf="@id/tv_product_price_label"
+            app:layout_constraintStart_toStartOf="@id/tv_product_price_label"
+            app:layout_constraintTop_toBottomOf="@+id/tv_product_price_label">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/selector_background_text_field"
+                android:hint="@string/label_product_price"
+                android:imeOptions="actionNext"
+                android:inputType="number"
+                android:maxLines="1" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
             android:id="@+id/tv_product_stock_label"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
+            android:layout_marginStart="4dp"
             android:layout_marginTop="6dp"
+            android:layout_marginEnd="16dp"
             android:text="@string/label_product_stock"
             android:textColor="@color/gray_800"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_product_price_label"
             app:layout_constraintTop_toBottomOf="@id/tf_product_description" />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -236,6 +302,7 @@
         </com.google.android.material.chip.ChipGroup>
 
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_product_add"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
