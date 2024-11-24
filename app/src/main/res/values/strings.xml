@@ -13,4 +13,8 @@
     <string name="chip_pixar">픽사</string>
     <string name="chip_marvel">마블</string>
     <string name="chip_harry_potter">해리포터</string>
+    <string name="description_product_image">제품 상세 이미지</string>
+    <string name="label_product_best">BEST</string>
+    <string name="label_edit">수정</string>
+    <string name="label_delete">삭제</string>
 </resources>
