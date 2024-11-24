@@ -35,8 +35,14 @@ class SearchFragment: Fragment() {
     * 리스너들 모음 함수
     * */
     private fun setupListeners() {
-        binding.toolbarSearch.setNavigationOnClickListener {
-            popBackstack()
+        with(binding) {
+            toolbarSearch.setNavigationOnClickListener {
+                popBackstack()
+            }
+
+            btnSearch.setOnClickListener {
+                // 검색 결과 화면 구현하기
+            }
         }
     }
 }
