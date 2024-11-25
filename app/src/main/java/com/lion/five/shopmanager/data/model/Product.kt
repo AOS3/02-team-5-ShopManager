@@ -1,5 +1,9 @@
 package com.lion.five.shopmanager.data.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class Product(
     val id: Int = 0, // 기본값 0
     val name: String, // 상품명
@@ -11,4 +15,4 @@ data class Product(
     val reviewCount: Int, // 리뷰 수
     val isBest: Boolean = false, // 기본값 false, 베스트 상품은 true
     val createAt: Long = System.currentTimeMillis() // 생성 시간, 기본값 현재 시간
-)
+): Parcelable
