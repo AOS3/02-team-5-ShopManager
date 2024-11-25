@@ -27,14 +27,12 @@
             app:statusBarScrim="@color/white"
             app:title="상품 상세">
 
-            <ImageView
-                android:id="@+id/iv_product_detail_image"
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/viewPager_product_image"
                 android:layout_width="match_parent"
+                android:scaleType="centerCrop"
                 android:layout_height="match_parent"
-                android:background="@color/gray_300"
-                android:contentDescription="@string/description_product_image"
-                android:fitsSystemWindows="true"
-                android:scaleType="centerCrop" />
+                android:fitsSystemWindows="true" />
 
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/toolbar"
