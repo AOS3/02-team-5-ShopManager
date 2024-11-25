@@ -6,9 +6,12 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.lion.five.shopmanager.data.model.Product
 import com.lion.five.shopmanager.databinding.ItemProductBinding
+import com.lion.five.shopmanager.listener.OnItemClickListener
 import com.lion.five.shopmanager.utils.toDecimalFormat
 
-class ProductAdapter : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
+class ProductAdapter(
+    private val listener: OnItemClickListener,
+) : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
     private val items = mutableListOf<Product>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
@@ -18,7 +21,7 @@ class ProductAdapter : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() 
                 parent,
                 false
             )
-        )
+        ) { position -> listener.onItemClick(items[position]) }
     }
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
@@ -35,7 +38,14 @@ class ProductAdapter : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() 
 
     class ProductViewHolder(
         private val binding: ItemProductBinding,
+        onItemClick: (position: Int) -> Unit,
     ): RecyclerView.ViewHolder(binding.root) {
+        init {
+            binding.root.setOnClickListener {
+                onItemClick(adapterPosition)
+            }
+        }
+
         fun bind(product: Product) {
             with(binding) {
                 tvProductTitle.text = product.name

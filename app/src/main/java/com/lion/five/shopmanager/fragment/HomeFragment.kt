@@ -11,15 +11,17 @@ import com.google.android.material.shape.ShapeAppearanceModel
 import com.lion.five.shopmanager.R
 import com.lion.five.shopmanager.adapter.ProductAdapter
 import com.lion.five.shopmanager.data.Storage
+import com.lion.five.shopmanager.data.model.Product
 import com.lion.five.shopmanager.data.model.ProductCategory
 import com.lion.five.shopmanager.databinding.FragmentHomeBinding
+import com.lion.five.shopmanager.listener.OnItemClickListener
 import com.lion.five.shopmanager.utils.replaceFragment
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), OnItemClickListener {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
-    private val adapter: ProductAdapter by lazy { ProductAdapter() }
+    private val adapter: ProductAdapter by lazy { ProductAdapter(this) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,6 +42,14 @@ class HomeFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onItemClick(product: Product) {
+        replaceFragment(DetailFragment().apply {
+            arguments = Bundle().apply {
+                putParcelable("product", product)
+            }
+        }, "DetailFragment")
     }
 
     /*
@@ -146,4 +156,5 @@ class HomeFragment : Fragment() {
             binding.chipGroupCategory.addView(chip)
         }
     }
+
 }
