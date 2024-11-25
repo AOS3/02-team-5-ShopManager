@@ -4,9 +4,12 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
+import com.lion.five.shopmanager.data.converter.Converters
 import com.lion.five.shopmanager.data.vo.ProductVO
 
 @Database(entities = [ProductVO::class], version = 1, exportSchema = true)
+@TypeConverters(Converters::class)
 abstract class ProductDatabase : RoomDatabase(){
     abstract fun productDAO() : ProductDAO
 
