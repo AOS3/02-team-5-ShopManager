@@ -2,13 +2,13 @@ package com.lion.five.shopmanager.data.repository
 
 import android.content.Context
 import com.lion.five.shopmanager.data.dao.ProductDatabase
-import com.lion.five.shopmanager.data.model.ProductModel
+import com.lion.five.shopmanager.data.model.Product
 import com.lion.five.shopmanager.data.vo.ProductVO
 
 class ProductRepository {
     companion object
     // 상품 정보를 저장하는 메서드
-    fun insertProductInfo(context: Context, productModel: ProductModel){
+    fun insertProductInfo(context: Context, productModel: Product){
         // 데이터 베이스 객체를 가져온다.
         val productDatabase = ProductDatabase.getInstance(context)
 
@@ -21,13 +21,13 @@ class ProductRepository {
     }
 
     // 상품 정보 전체를 가져오는 메서드
-    fun selectProductInfoAll(context: Context) : MutableList<ProductModel>{
+    fun selectProductInfoAll(context: Context) : MutableList<Product>{
         // 데이터 베이스 객체를 가져온다.
         val productDatabase = ProductDatabase.getInstance(context)
         // DB에서 상품 전체 데이터를 가져온다.
         val productVoList = productDatabase?.productDAO()?.selectProductDataAll()
         // 상품 데이터를 담을 리스트
-        val productModelList = mutableListOf<ProductModel>()
+        val productModelList = mutableListOf<Product>()
 
         productVoList?.forEach{
             // 상품 데이터를 추출하고 객체에 담는다.
@@ -40,7 +40,7 @@ class ProductRepository {
     }
 
     // 선택한 상품 하나의 정보를 가져오는 메서드
-    fun selectProductInfoById(context: Context, id:Int) : ProductModel{
+    fun selectProductInfoById(context: Context, id:Int) : Product{
         // 데이터 베이스 객체를 가져온다.
         val productDatabase = ProductDatabase.getInstance(context)
         // DB에서 상품 하나의 정보를 가져온다.
@@ -66,7 +66,7 @@ class ProductRepository {
     }
 
     // 상품 정보 수정
-    fun updateProductInfo(context: Context, productModel: ProductModel){
+    fun updateProductInfo(context: Context, productModel: Product){
         // 데이터 베이스 객체를 가져온다
         val productDatabase = ProductDatabase.getInstance(context)
 
@@ -79,13 +79,13 @@ class ProductRepository {
     }
 
     // 이름으로 상품을 검색하는 메서드
-    fun searchProductByName(context: Context, productName:String):MutableList<ProductModel>{
+    fun searchProductByName(context: Context, productName:String):MutableList<Product>{
         // 데이터 베이스 객체를 가져온다.
         val productDatabase = ProductDatabase.getInstance(context)
         // 검색결과를 가져옵니다.
         val productVoList = productDatabase?.productDAO()?.searchProductByName("%$productName%")
         // 상품 데이터를 담을 리스트
-        val productModelList = mutableListOf<ProductModel>()
+        val productModelList = mutableListOf<Product>()
 
         // 검색 결과가 있을 경우
         productVoList?.forEach{
