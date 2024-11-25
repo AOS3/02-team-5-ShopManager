@@ -1,4 +1,4 @@
-package com.lion.five.shopmanager.data
+package com.lion.five.shopmanager.data.model
 
 data class Product(
     val id: Int = 0, // 기본값 0

@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import com.lion.five.shopmanager.data.Product
+import com.lion.five.shopmanager.data.model.Product
 import com.lion.five.shopmanager.databinding.ItemProductBinding
 import com.lion.five.shopmanager.utils.toDecimalFormat
 

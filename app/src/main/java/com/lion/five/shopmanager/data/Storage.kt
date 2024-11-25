@@ -1,6 +1,7 @@
 package com.lion.five.shopmanager.data
 
 import com.lion.five.shopmanager.R
+import com.lion.five.shopmanager.data.model.Product
 
 object Storage {
     val products = listOf(
