@@ -5,54 +5,73 @@ import com.lion.five.shopmanager.data.dao.ProductDatabase
 import com.lion.five.shopmanager.data.model.Product
 import com.lion.five.shopmanager.data.vo.ProductVO
 
-class ProductRepository {
-    companion object
+object ProductRepository {
     // 상품 정보를 저장하는 메서드
-    fun insertProductInfo(context: Context, productModel: Product){
-        // 데이터 베이스 객체를 가져온다.
+    fun insertProductInfo(context: Context, productModel: Product) {
         val productDatabase = ProductDatabase.getInstance(context)
 
-        // ViewModel 에 있는 데이터를 VO에 담아준다.
-        TODO()
+        val productVO = ProductVO(
+            name = productModel.name,
+            price = productModel.price,
+            type = productModel.type,
+            description = productModel.description,
+            images = productModel.images,
+            stock = productModel.stock,
+            reviewCount = productModel.reviewCount,
+            isBest = productModel.isBest
+        )
 
-        val productVO = TODO()
-        // 상품 정보를 저장한다.
-        productDatabase?.productDAO()?.insertProductData(productVO)
+        productDatabase.productDAO().insertProductData(productVO)
     }
 
     // 상품 정보 전체를 가져오는 메서드
-    fun selectProductInfoAll(context: Context) : MutableList<Product>{
-        // 데이터 베이스 객체를 가져온다.
+    fun selectProductInfoAll(context: Context): List<Product> {
         val productDatabase = ProductDatabase.getInstance(context)
-        // DB에서 상품 전체 데이터를 가져온다.
-        val productVoList = productDatabase?.productDAO()?.selectProductDataAll()
-        // 상품 데이터를 담을 리스트
-        val productModelList = mutableListOf<Product>()
+        val voList: List<ProductVO> = productDatabase.productDAO().selectProductDataAll()
 
-        productVoList?.forEach{
-            // 상품 데이터를 추출하고 객체에 담는다.
-            // productModelList에 객체를 추가하여
-            // productModelList를 반환한다.
-            TODO()
+        return voList.map { vo ->
+            Product(
+                id = vo.id,
+                name = vo.name,
+                price = vo.price,
+                type = vo.type,
+                description = vo.description,
+                images = vo.images,
+                stock = vo.stock,
+                reviewCount = vo.reviewCount,
+                isBest = vo.isBest,
+                createAt = vo.createAt
+            )
         }
-
-        return productModelList
     }
 
+    // 아이디로 상품을 검색하는 메서드
     // 선택한 상품 하나의 정보를 가져오는 메서드
-    fun selectProductInfoById(context: Context, id:Int) : Product{
-        // 데이터 베이스 객체를 가져온다.
+    fun searchProductById(context: Context, id: Int): Product {
+        // 데이터베이스 객체를 가져온다.
         val productDatabase = ProductDatabase.getInstance(context)
+
+        // productDAO 객체를 가져온다.
+        val dao = productDatabase.productDAO()
+
         // DB에서 상품 하나의 정보를 가져온다.
-        val productVO = productDatabase?.productDAO()?.selectProductDataById(id)
+        val productVO = dao.selectProductDataById(id)
 
-        // 객체에 데이터를 담는다.
-        TODO()
-
-
-        val productModel = TODO()
-        // 객체를 반환한다.
-        return productModel
+        // 상품 정보가 없으면 null을 반환
+        return productVO.let {
+            Product(
+                id = it.id,
+                name = it.name,
+                description = it.description,
+                price = it.price,
+                type = it.type,
+                images = it.images,
+                stock = it.stock,
+                reviewCount = it.reviewCount,
+                isBest = it.isBest,
+                createAt = it.createAt
+            )
+        }
     }
 
     // 상품 하나의 정보 삭제
@@ -62,20 +81,26 @@ class ProductRepository {
         // 삭제할 상품 번호를 담고 있는 객체를 생성한다.
         val productVO = ProductVO(id = id)
         // 상품 하나를 삭제한다.
-        productDatabase?.productDAO()?.deleteProductData(productVO)
+        productDatabase.productDAO().deleteProductData(productVO)
     }
 
     // 상품 정보 수정
-    fun updateProductInfo(context: Context, productModel: Product){
-        // 데이터 베이스 객체를 가져온다
+    fun updateProductInfo(context: Context, productModel: Product) {
         val productDatabase = ProductDatabase.getInstance(context)
 
-        // VO에 객체를 담아준다.
-        TODO()
+        val productVO = ProductVO(
+            id = productModel.id,
+            name = productModel.name,
+            price = productModel.price,
+            type = productModel.type,
+            description = productModel.description,
+            images = productModel.images,
+            stock = productModel.stock,
+            reviewCount = productModel.reviewCount,
+            isBest = productModel.isBest
+        )
 
-        val productVO = TODO()
-        // 상품 정보를 수정한다.
-        productDatabase?.productDAO()?.updateProductData(productVO)
+        productDatabase.productDAO().updateProductData(productVO)
     }
 
     // 이름으로 상품을 검색하는 메서드
