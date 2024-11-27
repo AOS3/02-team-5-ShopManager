@@ -14,18 +14,12 @@ interface ProductDAO {
     fun insertProductData(productVO: ProductVO)
 
     // 상품 정보를 가져오는 메서드
-    @Query("""
-        select * from ProductTable 
-        order by id desc """)
+    @Query("SELECT * FROM ProductTable")
     fun selectProductDataAll(): List<ProductVO>
 
     // 상품 하나의 정보를 가져오는 메서드
-    @Query("""
-        select * from ProductTable
-        where id = :id
-    """)
-    fun selectProductDataById(id:Int) : ProductVO
-
+    @Query("SELECT * FROM ProductTable WHERE id = :id")
+    fun selectProductDataById(id: Int): ProductVO
 
     // 상품 하나의 정보를 삭제하는 메서드
     @Delete
@@ -36,10 +30,6 @@ interface ProductDAO {
     fun updateProductData(productVO: ProductVO)
 
     // 이름으로 상품을 검색하는 메서드
-    // LIKE 연산자 특정 문자가 포함되어 있는 값을 조회
-    @Query("""
-        select * from ProductTable
-        where name like :productName
-        order by id desc""")
-    fun searchProductByName(productName: String) : List<ProductVO>
+    @Query("SELECT * FROM ProductTable WHERE name LIKE :productName ORDER BY id DESC")
+    fun searchProductByName(productName: String): List<ProductVO>
 }
