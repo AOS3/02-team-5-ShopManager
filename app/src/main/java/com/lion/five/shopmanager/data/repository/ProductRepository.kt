@@ -5,19 +5,23 @@ import com.lion.five.shopmanager.data.dao.ProductDatabase
 import com.lion.five.shopmanager.data.model.Product
 import com.lion.five.shopmanager.data.vo.ProductVO
 
-class ProductRepository {
-    companion object
+object ProductRepository {
     // 상품 정보를 저장하는 메서드
-    fun insertProductInfo(context: Context, productModel: Product){
-        // 데이터 베이스 객체를 가져온다.
+    fun insertProductInfo(context: Context, productModel: Product) {
         val productDatabase = ProductDatabase.getInstance(context)
 
-        // ViewModel 에 있는 데이터를 VO에 담아준다.
-        TODO()
+        val productVO = ProductVO(
+            name = productModel.name,
+            price = productModel.price,
+            type = productModel.type,
+            description = productModel.description,
+            images = productModel.images,
+            stock = productModel.stock,
+            reviewCount = productModel.reviewCount,
+            isBest = productModel.isBest
+        )
 
-        val productVO = TODO()
-        // 상품 정보를 저장한다.
-        productDatabase?.productDAO()?.insertProductData(productVO)
+        productDatabase.productDAO().insertProductData(productVO)
     }
 
     // 상품 정보 전체를 가져오는 메서드
