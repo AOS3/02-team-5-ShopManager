@@ -25,19 +25,23 @@ object ProductRepository {
     }
 
     // 상품 정보 전체를 가져오는 메서드
-    fun selectProductInfoAll(context: Context) : MutableList<Product>{
-        // 데이터 베이스 객체를 가져온다.
+    fun selectProductInfoAll(context: Context): List<Product> {
         val productDatabase = ProductDatabase.getInstance(context)
-        // DB에서 상품 전체 데이터를 가져온다.
-        val productVoList = productDatabase?.productDAO()?.selectProductDataAll()
-        // 상품 데이터를 담을 리스트
-        val productModelList = mutableListOf<Product>()
+        val voList: List<ProductVO> = productDatabase.productDAO().selectProductDataAll()
 
-        productVoList?.forEach{
-            // 상품 데이터를 추출하고 객체에 담는다.
-            // productModelList에 객체를 추가하여
-            // productModelList를 반환한다.
-            TODO()
+        return voList.map { vo ->
+            Product(
+                id = vo.id,
+                name = vo.name,
+                price = vo.price,
+                type = vo.type,
+                description = vo.description,
+                images = vo.images,
+                stock = vo.stock,
+                reviewCount = vo.reviewCount,
+                isBest = vo.isBest,
+                createAt = vo.createAt
+            )
         }
 
         return productModelList
