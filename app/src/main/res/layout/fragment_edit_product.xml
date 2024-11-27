@@ -299,6 +299,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/chip_harry_potter" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/product_type_ghibli"
+                style="@style/AppChipStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/chip_ghibli" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/product_type_teenieping"
+                style="@style/AppChipStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/chip_teenieping" />
         </com.google.android.material.chip.ChipGroup>
 
         <androidx.appcompat.widget.AppCompatButton

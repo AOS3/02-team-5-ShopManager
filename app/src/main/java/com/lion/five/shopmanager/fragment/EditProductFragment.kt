@@ -9,51 +9,64 @@ import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
+import com.google.android.material.chip.Chip
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.lion.five.shopmanager.R
 import com.lion.five.shopmanager.adapter.ProductImageAdapter
-import com.lion.five.shopmanager.databinding.FragmentAddProductBinding
+import com.lion.five.shopmanager.data.model.Product
+import com.lion.five.shopmanager.data.repository.ProductRepository
 import com.lion.five.shopmanager.databinding.FragmentEditProductBinding
 import com.lion.five.shopmanager.listener.OnDeleteClickListener
+import com.lion.five.shopmanager.utils.FileUtil
 import com.lion.five.shopmanager.utils.popBackstack
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class EditProductFragment : Fragment(), OnDeleteClickListener {
     private var _binding: FragmentEditProductBinding? = null
     private val binding get() = _binding!!
 
-    private var isName = false
-    private var isImage = false
-    private var isDescription = false
-    private var isPrice = false
-    private var isStock = false
-    private var isType = false
+    private var isName = true
+    private var isImage = true
+    private var isDescription = true
+    private var isPrice = true
+    private var isStock = true
+    private var isType = true
 
-    private val imageList = mutableListOf<Uri>()
 
     private val adapter: ProductImageAdapter by lazy { ProductImageAdapter(this) }
+
+    private val product by lazy { arguments?.getParcelable<Product>("product") }
+    private val imageList = mutableListOf<Uri>()
 
     /**
      * 갤러리에서 선택한 이미지들을 처리하는 런처
      */
-    private val galleryLauncher = registerForActivityResult(ActivityResultContracts.GetMultipleContents()) { uris ->
-        if (uris.isNotEmpty()) {
-            handleImagesSelected(uris)
+    private val galleryLauncher =
+        registerForActivityResult(ActivityResultContracts.GetMultipleContents()) { uris ->
+            if (uris.isNotEmpty()) {
+                handleImagesSelected(uris)
+            }
         }
-    }
 
     /**
      * 권한 요청 결과를 처리하는 런처
      */
-    private val permissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
-        when {
-            isGranted -> openGallery()
-            shouldShowRequestPermissionRationale(getRequiredPermission()) -> showPermissionContextPopup()
-            else -> showPermissionContextPopup()
+    private val permissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+            when {
+                isGranted -> openGallery()
+                shouldShowRequestPermissionRationale(getRequiredPermission()) -> showPermissionContextPopup()
+                else -> showPermissionContextPopup()
+            }
         }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -90,6 +103,14 @@ class EditProductFragment : Fragment(), OnDeleteClickListener {
      * 각종 입력 필드 설정
      */
     private fun setupLayout() {
+        with(binding) {
+            tfProductName.editText?.setText(product?.name)
+            tfProductDescription.editText?.setText(product?.description)
+            tfProductPrice.editText?.setText(product?.price.toString())
+            tfProductStock.editText?.setText(product?.stock.toString())
+            cgProductType.check(selectProductType())
+        }
+
         setupProductNameTextField()
         setupProductDescriptionTextField()
         setupProductPriceTextField()
@@ -97,11 +118,30 @@ class EditProductFragment : Fragment(), OnDeleteClickListener {
         setupProductTypeTextField()
     }
 
+    private fun selectProductType(): Int {
+        return when (product?.type) {
+            "디즈니" -> R.id.product_type_disney
+            "픽사" -> R.id.product_type_pixar
+            "마블" -> R.id.product_type_marvel
+            "해리포터" -> R.id.product_type_harry_potter
+            "지브리" -> R.id.product_type_ghibli
+            "티니핑" -> R.id.product_type_teenieping
+            else -> 0
+        }
+    }
+
     /**
      * 이미지 리사이클러뷰 어댑터 설정
      */
     private fun setupRecyclerView() {
         binding.rvProductImageList.adapter = adapter
+        val fileNames = product?.images
+
+        imageList.addAll(fileNames!!.map { fileName ->
+            FileUtil.loadImageUriFromFileName(requireContext(), fileName)
+        })
+
+        adapter.submitList(imageList)
     }
 
     /**
@@ -125,6 +165,45 @@ class EditProductFragment : Fragment(), OnDeleteClickListener {
 
         binding.ivAddProductImageView.setOnClickListener {
             checkPermissionAndOpenGallery()
+        }
+
+        binding.btnProductAdd.setOnClickListener {
+            val name = binding.tfProductName.editText?.text.toString()
+            val description = binding.tfProductDescription.editText?.text.toString()
+            val price = binding.tfProductPrice.editText?.text.toString().toInt()
+            val stock = binding.tfProductStock.editText?.text.toString().toInt()
+            val type = binding.cgProductType.findViewById<Chip>(
+                binding.cgProductType.checkedChipId
+            ).text.toString()
+
+            // 이미지 파일 저장하고 파일명 리스트 생성
+            val savedImageFiles = imageList.map { uri ->
+                FileUtil.saveImageFromUri(requireContext(), uri)
+            }
+
+            // Product 객체 생성
+            val newProduct = Product(
+                id = product!!.id,
+                name = name,
+                description = description,
+                price = price,
+                stock = stock,
+                type = type,
+                images = savedImageFiles,
+                reviewCount = 0
+            )
+
+            // 코루틴으로 DB 저장 처리
+            lifecycleScope.launch(Dispatchers.IO) {
+                // Repository를 통해 DB에 저장
+                ProductRepository.updateProductInfo(requireContext(), newProduct)
+
+                // UI 업데이트는 메인 스레드에서
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(requireContext(), "상품이 수정되었습니다.", Toast.LENGTH_SHORT).show()
+                    popBackstack()
+                }
+            }
         }
     }
 
@@ -156,6 +235,7 @@ class EditProductFragment : Fragment(), OnDeleteClickListener {
             isStock = validateNumberInput(text)
             updateAddButtonState()
         }
+        isStock = binding.tfProductStock.editText?.text.toString().toInt() != 0
     }
 
     /**
@@ -217,11 +297,10 @@ class EditProductFragment : Fragment(), OnDeleteClickListener {
         binding.groupAddProductView.visibility = View.INVISIBLE
         binding.groupAddMoreProductImage.visibility = View.VISIBLE
 
-        imageList.clear()
         imageList.addAll(selectedUris)
         adapter.submitList(imageList)
 
-        isImage = true
+        isImage = imageList.isNotEmpty()
         updateAddButtonState()
     }
 
