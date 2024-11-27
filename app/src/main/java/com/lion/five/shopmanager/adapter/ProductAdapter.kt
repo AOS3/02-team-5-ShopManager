@@ -1,5 +1,6 @@
 package com.lion.five.shopmanager.adapter
 
+import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
@@ -7,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.lion.five.shopmanager.data.model.Product
 import com.lion.five.shopmanager.databinding.ItemProductBinding
 import com.lion.five.shopmanager.listener.OnItemClickListener
+import com.lion.five.shopmanager.utils.FileUtil
 import com.lion.five.shopmanager.utils.toDecimalFormat
 
 class ProductAdapter(
@@ -49,14 +51,23 @@ class ProductAdapter(
         fun bind(product: Product) {
             with(binding) {
                 tvProductTitle.text = product.name
-                ivProductThumbnail.setImageResource(product.images.first())
+                itemView.post {
+                    Thread {
+                        val imageFile = FileUtil.loadImageFile(itemView.context, product.images.first())
+                        val options = BitmapFactory.Options().apply { inSampleSize = 4 }
+                        val bitmap = BitmapFactory.decodeFile(imageFile.absolutePath, options)
+
+                        itemView.post {
+                            ivProductThumbnail.setImageBitmap(bitmap)
+                        }
+                    }.start()
+                }
+
                 tvProductIsBest.isVisible = product.isBest
                 tvProductPrice.text = "${product.price.toDecimalFormat()}원"
                 tvProductReviewCount.text = if (product.reviewCount == 0) "리뷰 없음" else "${product.reviewCount}"
                 tvProductType.text = product.type
             }
         }
-
     }
-
 }

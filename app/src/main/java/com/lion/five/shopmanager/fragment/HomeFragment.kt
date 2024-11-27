@@ -5,17 +5,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.chip.Chip
 import com.google.android.material.shape.CornerFamily
 import com.google.android.material.shape.ShapeAppearanceModel
 import com.lion.five.shopmanager.R
 import com.lion.five.shopmanager.adapter.ProductAdapter
-import com.lion.five.shopmanager.data.Storage
 import com.lion.five.shopmanager.data.model.Product
 import com.lion.five.shopmanager.data.model.ProductCategory
+import com.lion.five.shopmanager.data.repository.ProductRepository
 import com.lion.five.shopmanager.databinding.FragmentHomeBinding
 import com.lion.five.shopmanager.listener.OnItemClickListener
 import com.lion.five.shopmanager.utils.replaceFragment
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class HomeFragment : Fragment(), OnItemClickListener {
     private var _binding: FragmentHomeBinding? = null
@@ -37,6 +41,7 @@ class HomeFragment : Fragment(), OnItemClickListener {
         setListeners()
         setupRecyclerView()
         setupChips()
+        loadProducts()
     }
 
     override fun onDestroyView() {
@@ -59,6 +64,16 @@ class HomeFragment : Fragment(), OnItemClickListener {
         setupToolbarListener()
         setupFabListener()
         setupChipGroupListener()
+    }
+
+    private fun loadProducts() {
+        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
+            val products = ProductRepository.selectProductInfoAll(requireContext())
+
+            withContext(Dispatchers.Main) {
+                adapter.submitList(products)
+            }
+        }
     }
 
     /*
@@ -96,16 +111,23 @@ class HomeFragment : Fragment(), OnItemClickListener {
     * 선택된 카테고리에 따른 상품 리스트 필터링
     */
     private fun updateProductList(checkedIds: List<Int>) {
-        val filteredList = if (checkedIds.isEmpty()) {
-            Storage.products
-        } else {
-            val selectedChip = binding.chipGroupCategory.findViewById<Chip>(checkedIds.first())
-            when (selectedChip.text) {
-                ProductCategory.ALL.categoryName -> Storage.products
-                else -> Storage.products.filter { it.type == selectedChip.text }
+        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
+            val allProducts = ProductRepository.selectProductInfoAll(requireContext())
+
+            val filteredList = if (checkedIds.isEmpty()) {
+                allProducts
+            } else {
+                val selectedChip = binding.chipGroupCategory.findViewById<Chip>(checkedIds.first())
+                when (selectedChip.text) {
+                    ProductCategory.ALL.categoryName -> allProducts
+                    else -> allProducts.filter { it.type == selectedChip.text }
+                }
+            }
+
+            withContext(Dispatchers.Main) {
+                adapter.submitList(filteredList)
             }
         }
-        adapter.submitList(filteredList)
     }
 
     /*
@@ -129,7 +151,6 @@ class HomeFragment : Fragment(), OnItemClickListener {
     */
     private fun setupRecyclerView() {
         binding.rvProductList.adapter = adapter
-        adapter.submitList(Storage.products)
     }
 
     /*
