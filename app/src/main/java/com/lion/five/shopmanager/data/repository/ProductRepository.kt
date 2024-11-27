@@ -43,24 +43,35 @@ object ProductRepository {
                 createAt = vo.createAt
             )
         }
-
-        return productModelList
     }
 
+    // 아이디로 상품을 검색하는 메서드
     // 선택한 상품 하나의 정보를 가져오는 메서드
-    fun selectProductInfoById(context: Context, id:Int) : Product{
-        // 데이터 베이스 객체를 가져온다.
+    fun searchProductById(context: Context, id: Int): Product {
+        // 데이터베이스 객체를 가져온다.
         val productDatabase = ProductDatabase.getInstance(context)
+
+        // productDAO 객체를 가져온다.
+        val dao = productDatabase.productDAO()
+
         // DB에서 상품 하나의 정보를 가져온다.
-        val productVO = productDatabase?.productDAO()?.selectProductDataById(id)
+        val productVO = dao.selectProductDataById(id)
 
-        // 객체에 데이터를 담는다.
-        TODO()
-
-
-        val productModel = TODO()
-        // 객체를 반환한다.
-        return productModel
+        // 상품 정보가 없으면 null을 반환
+        return productVO.let {
+            Product(
+                id = it.id,
+                name = it.name,
+                description = it.description,
+                price = it.price,
+                type = it.type,
+                images = it.images,
+                stock = it.stock,
+                reviewCount = it.reviewCount,
+                isBest = it.isBest,
+                createAt = it.createAt
+            )
+        }
     }
 
     // 상품 하나의 정보 삭제
