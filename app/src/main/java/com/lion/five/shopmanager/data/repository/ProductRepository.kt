@@ -81,20 +81,26 @@ object ProductRepository {
         // 삭제할 상품 번호를 담고 있는 객체를 생성한다.
         val productVO = ProductVO(id = id)
         // 상품 하나를 삭제한다.
-        productDatabase?.productDAO()?.deleteProductData(productVO)
+        productDatabase.productDAO().deleteProductData(productVO)
     }
 
     // 상품 정보 수정
-    fun updateProductInfo(context: Context, productModel: Product){
-        // 데이터 베이스 객체를 가져온다
+    fun updateProductInfo(context: Context, productModel: Product) {
         val productDatabase = ProductDatabase.getInstance(context)
 
-        // VO에 객체를 담아준다.
-        TODO()
+        val productVO = ProductVO(
+            id = productModel.id,
+            name = productModel.name,
+            price = productModel.price,
+            type = productModel.type,
+            description = productModel.description,
+            images = productModel.images,
+            stock = productModel.stock,
+            reviewCount = productModel.reviewCount,
+            isBest = productModel.isBest
+        )
 
-        val productVO = TODO()
-        // 상품 정보를 수정한다.
-        productDatabase?.productDAO()?.updateProductData(productVO)
+        productDatabase.productDAO().updateProductData(productVO)
     }
 
     // 이름으로 상품을 검색하는 메서드
