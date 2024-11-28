@@ -103,25 +103,35 @@ object ProductRepository {
         productDatabase.productDAO().updateProductData(productVO)
     }
 
-    // 이름으로 상품을 검색하는 메서드
-    fun searchProductByName(context: Context, productName:String):MutableList<Product>{
-        // 데이터 베이스 객체를 가져온다.
+    fun searchProductByName(context: Context, productName: String): MutableList<Product> {
+        // 데이터베이스 객체를 가져온다.
         val productDatabase = ProductDatabase.getInstance(context)
-        // 검색결과를 가져옵니다.
-        val productVoList = productDatabase?.productDAO()?.searchProductByName("%$productName%")
-        // 상품 데이터를 담을 리스트
+        // 공백으로 단어 분리
+        val keywords = productName.trim().split("\\s+".toRegex())
+
+        // 검색 쿼리로 첫 번째 키워드만 검색
+        val productVoList = productDatabase?.productDAO()?.searchProductByName("%${keywords.first()}%")
         val productModelList = mutableListOf<Product>()
 
-        // 검색 결과가 있을 경우
-        productVoList?.forEach{
-            // 검색된 상품 데이터를 추출한다.
-            TODO()
-            // 객체에 담는다.
-            val productModel = TODO()
-            // productModelList에 객체를 담는다.
-            productModelList.add(productModel)
+        productVoList?.forEach { vo ->
+            // 모든 키워드가 포함되어 있는 상품만 필터링
+            if (keywords.all { keyword -> vo.name.contains(keyword, ignoreCase = true) }) {
+                val productModel = Product(
+                    id = vo.id,
+                    name = vo.name,
+                    price = vo.price,
+                    type = vo.type,
+                    description = vo.description,
+                    images = vo.images,
+                    stock = vo.stock,
+                    reviewCount = vo.reviewCount,
+                    isBest = vo.isBest,
+                    createAt = vo.createAt
+                )
+                productModelList.add(productModel)
+            }
         }
-        // productModelList를 반환한다.
+
         return productModelList
     }
 }

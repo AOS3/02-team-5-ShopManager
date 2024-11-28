@@ -9,13 +9,17 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.lion.five.shopmanager.adapter.ProductAdapter
-import com.lion.five.shopmanager.data.Storage
 import com.lion.five.shopmanager.data.model.Product
+import com.lion.five.shopmanager.data.repository.ProductRepository
 import com.lion.five.shopmanager.databinding.FragmentSearchBinding
 import com.lion.five.shopmanager.listener.OnItemClickListener
 import com.lion.five.shopmanager.utils.popBackstack
 import com.lion.five.shopmanager.utils.replaceFragment
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class SearchFragment: Fragment(), OnItemClickListener {
     private var _binding: FragmentSearchBinding? = null
@@ -110,23 +114,24 @@ class SearchFragment: Fragment(), OnItemClickListener {
                 return
             }
 
-            // 여러 단어를 모두 포함하는 상품 찾기
-            val result = Storage.products.filter { product ->
-                // 모든 단어가 포함되어야 함
-                keywords.all { keyword -> product.name.contains(keyword, ignoreCase = true) }
-            }
+            // 백그라운드에서 검색을 처리
+            lifecycleScope.launch(Dispatchers.IO) {
+                val result = ProductRepository.searchProductByName(requireContext(), keyword)
 
-            // 검색 결과 없음 처리
-            if (result.isEmpty()) {
-                rvSearchList.visibility = View.GONE
-                tvNoResults.visibility = View.VISIBLE
-                tvNoResults.text = "검색 결과가 없습니다."
-            } else {
-                rvSearchList.visibility = View.VISIBLE
-                tvNoResults.visibility = View.GONE
-            }
+                // UI 작업은 메인 스레드에서
+                launch(Dispatchers.Main) {
+                    if (result.isEmpty()) {
+                        rvSearchList.visibility = View.GONE
+                        tvNoResults.visibility = View.VISIBLE
+                        tvNoResults.text = "검색 결과가 없습니다."
+                    } else {
+                        rvSearchList.visibility = View.VISIBLE
+                        tvNoResults.visibility = View.GONE
+                    }
 
-            adapter.submitList(result)
+                    adapter.submitList(result)
+                }
+            }
         }
     }
 
