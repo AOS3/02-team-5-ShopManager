@@ -7,12 +7,12 @@ import com.lion.five.shopmanager.R
 import java.text.DecimalFormat
 
 fun Fragment.replaceFragment(fragment: Fragment, tag: String) {
-    Log.d("", fragment.toString())
     parentFragmentManager.commit {
         replace(R.id.container_main, fragment)
         addToBackStack(tag)
     }
 }
+
 fun Fragment.popBackstack() {
     parentFragmentManager.popBackStack()
 }

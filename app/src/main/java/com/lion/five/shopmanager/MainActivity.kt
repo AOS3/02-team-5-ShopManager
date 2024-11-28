@@ -4,12 +4,18 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import androidx.fragment.app.commit
 import androidx.lifecycle.lifecycleScope
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.lion.five.shopmanager.data.Storage
 import com.lion.five.shopmanager.data.repository.ProductRepository
 import com.lion.five.shopmanager.databinding.ActivityMainBinding
 import com.lion.five.shopmanager.fragment.HomeFragment
+import com.lion.five.shopmanager.fragment.LoginFragment
+import com.lion.five.shopmanager.fragment.SalesFragment
 import com.lion.five.shopmanager.utils.FileUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -20,8 +26,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge() // 상태바와 네비게이션 바를 포함한 엣지 투 엣지 레이아웃을 활성화
         setContentView(binding.root)
+        setupBottomNavigation()
 
         lifecycleScope.launch(Dispatchers.IO) {
             val currentProducts = ProductRepository.selectProductInfoAll(this@MainActivity)
@@ -145,6 +151,35 @@ class MainActivity : AppCompatActivity() {
             } catch (e: Exception) {
                 // 예외 발생 시 로그 출력
                 e.printStackTrace()
+            }
+        }
+    }
+
+    private fun setupBottomNavigation() {
+        binding.bottomNavigationMain.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.navigation_home -> {
+                    supportFragmentManager.commit {
+                        replace(R.id.container_main, HomeFragment())
+                        setReorderingAllowed(true)
+                    }
+                    true
+                }
+                R.id.navigation_sales -> {
+                    supportFragmentManager.commit {
+                        replace(R.id.container_main, SalesFragment())
+                        setReorderingAllowed(true)
+                    }
+                    true
+                }
+                R.id.navigation_login -> {
+                    supportFragmentManager.commit {
+                        replace(R.id.container_main, LoginFragment())
+                        setReorderingAllowed(true)
+                    }
+                    true
+                }
+                else -> false
             }
         }
     }
