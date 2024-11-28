@@ -2,6 +2,8 @@
     <style name="Base.Theme.ShopManager" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="android:colorBackground">@color/white</item>
         <item name="popupMenuBackground">@color/white</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">true</item>
     </style>
 
     <style name="Theme.ShopManager" parent="Base.Theme.ShopManager" />
