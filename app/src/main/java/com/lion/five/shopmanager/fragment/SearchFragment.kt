@@ -51,6 +51,14 @@ class SearchFragment: Fragment(), OnItemClickListener {
         _binding = null
     }
 
+    override fun onItemClick(product: Product) {
+        replaceFragment(DetailFragment().apply {
+            arguments = Bundle().apply {
+                putParcelable("product", product)
+            }
+        }, "DetailFragment")
+    }
+
     /*
     * 리스너들 모음 함수
     * */
@@ -88,14 +96,6 @@ class SearchFragment: Fragment(), OnItemClickListener {
         }
     }
 
-    override fun onItemClick(product: Product) {
-        replaceFragment(DetailFragment().apply {
-            arguments = Bundle().apply {
-                putParcelable("product", product)
-            }
-        }, "DetailFragment")
-    }
-
     /*
     * 검색 리사이클러뷰 어댑터 설정
     */
@@ -104,7 +104,7 @@ class SearchFragment: Fragment(), OnItemClickListener {
     }
 
     // 이름으로 상품 검색
-    fun searchProductsByName(keyword: String) {
+    private fun searchProductsByName(keyword: String) {
         with(binding){
             // 공백을 기준으로 단어들을 분리하여 검색
             val keywords = keyword.trim().split("\\s+".toRegex())
