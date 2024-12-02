@@ -16,6 +16,7 @@ import com.lion.five.shopmanager.data.model.Product
 import com.lion.five.shopmanager.data.repository.ProductRepository
 import com.lion.five.shopmanager.databinding.FragmentSearchBinding
 import com.lion.five.shopmanager.listener.OnItemClickListener
+import com.lion.five.shopmanager.utils.clearFocusAndHideKeyboard
 import com.lion.five.shopmanager.utils.popBackstack
 import com.lion.five.shopmanager.utils.replaceFragment
 import kotlinx.coroutines.Dispatchers
@@ -69,7 +70,7 @@ class SearchFragment: Fragment(), OnItemClickListener {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH){
                     val keyword = tilSearch.editText?.text.toString()
                     searchProductsByName(keyword)
-                    hideKeyboard()
+                    v.clearFocusAndHideKeyboard()
                     true
                 }
                 else{
@@ -82,7 +83,7 @@ class SearchFragment: Fragment(), OnItemClickListener {
                 // 검색 결과 화면 구현하기
                 val keyword = tilSearch.editText?.text.toString()
                 searchProductsByName(keyword)
-                hideKeyboard()
+                it.clearFocusAndHideKeyboard()
             }
         }
     }
@@ -137,15 +138,4 @@ class SearchFragment: Fragment(), OnItemClickListener {
             }
         }
     }
-
-    // 키보드 내리고 포커스 없애기
-    fun hideKeyboard() {
-        // 키보드 숨기기
-        val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(binding.tilSearch.windowToken, 0)
-
-        // EditText에서 포커스 제거
-        binding.tilSearch.editText?.clearFocus()
-    }
-
 }
