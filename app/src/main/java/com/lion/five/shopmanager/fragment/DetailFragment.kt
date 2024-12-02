@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.lion.five.shopmanager.MainActivity
 import com.lion.five.shopmanager.R
 import com.lion.five.shopmanager.adapter.ProductDetailAdapter
 import com.lion.five.shopmanager.data.model.Product
@@ -47,6 +48,7 @@ class DetailFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (activity as? MainActivity)?.setBottomNavigationVisibility(false)
 
         lifecycleScope.launch(Dispatchers.IO) {
             detailProduct = ProductRepository.searchProductById(requireContext(), product!!.id)

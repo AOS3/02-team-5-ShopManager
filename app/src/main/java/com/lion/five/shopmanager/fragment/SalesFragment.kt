@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.lion.five.shopmanager.MainActivity
 import com.lion.five.shopmanager.R
 import com.lion.five.shopmanager.databinding.FragmentSalesBinding
 
@@ -23,6 +24,8 @@ class SalesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (activity as? MainActivity)?.setBottomNavigationVisibility(true)
+
     }
 
     override fun onDestroyView() {

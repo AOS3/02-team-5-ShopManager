@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import com.lion.five.shopmanager.MainActivity
 import com.lion.five.shopmanager.databinding.FragmentSignInBinding
 import com.lion.five.shopmanager.utils.clearAccount
 import com.lion.five.shopmanager.utils.getAccount
@@ -43,10 +44,15 @@ class SignInFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (activity as? MainActivity)?.setBottomNavigationVisibility(true)
         updateViewVisibility()
         setupListeners()
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
     /*
     * 회원가입, 로그아웃, 로그인, 회원 탈퇴 버튼 리스트들 모음
     * */
