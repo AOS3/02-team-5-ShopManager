@@ -1,6 +1,8 @@
 package com.lion.five.shopmanager.fragment
 
 import android.Manifest
+import android.app.AlertDialog
+import android.content.Context
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
@@ -16,7 +18,6 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.chip.Chip
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lion.five.shopmanager.R
 import com.lion.five.shopmanager.adapter.ProductImageAdapter
 import com.lion.five.shopmanager.data.model.Product
@@ -24,7 +25,9 @@ import com.lion.five.shopmanager.data.repository.ProductRepository
 import com.lion.five.shopmanager.databinding.FragmentEditProductBinding
 import com.lion.five.shopmanager.listener.OnDeleteClickListener
 import com.lion.five.shopmanager.utils.FileUtil
+import com.lion.five.shopmanager.utils.clearAccount
 import com.lion.five.shopmanager.utils.popBackstack
+import com.lion.five.shopmanager.utils.showMessage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -33,6 +36,7 @@ class EditProductFragment : Fragment(), OnDeleteClickListener {
     private var _binding: FragmentEditProductBinding? = null
     private val binding get() = _binding!!
 
+    private lateinit var appContext: Context
     private var isName = true
     private var isImage = true
     private var isDescription = true
@@ -67,6 +71,11 @@ class EditProductFragment : Fragment(), OnDeleteClickListener {
                 else -> showPermissionContextPopup()
             }
         }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        appContext = context
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -168,41 +177,48 @@ class EditProductFragment : Fragment(), OnDeleteClickListener {
         }
 
         binding.btnProductAdd.setOnClickListener {
-            val name = binding.tfProductName.editText?.text.toString()
-            val description = binding.tfProductDescription.editText?.text.toString()
-            val price = binding.tfProductPrice.editText?.text.toString().toInt()
-            val stock = binding.tfProductStock.editText?.text.toString().toInt()
-            val type = binding.cgProductType.findViewById<Chip>(
-                binding.cgProductType.checkedChipId
-            ).text.toString()
+            showUpdateProductDialog()
+        }
+    }
 
-            // 이미지 파일 저장하고 파일명 리스트 생성
-            val savedImageFiles = imageList.map { uri ->
-                FileUtil.saveImageFromUri(requireContext(), uri)
-            }
+    /*
+    * 상품을 수정하는 함수
+    * */
+    private fun updateProduct() {
+        val name = binding.tfProductName.editText?.text.toString()
+        val description = binding.tfProductDescription.editText?.text.toString()
+        val price = binding.tfProductPrice.editText?.text.toString().toInt()
+        val stock = binding.tfProductStock.editText?.text.toString().toInt()
+        val type = binding.cgProductType.findViewById<Chip>(
+            binding.cgProductType.checkedChipId
+        ).text.toString()
 
-            // Product 객체 생성
-            val newProduct = Product(
-                id = product!!.id,
-                name = name,
-                description = description,
-                price = price,
-                stock = stock,
-                type = type,
-                images = savedImageFiles,
-                reviewCount = 0
-            )
+        // 이미지 파일 저장하고 파일명 리스트 생성
+        val savedImageFiles = imageList.map { uri ->
+            FileUtil.saveImageFromUri(requireContext(), uri)
+        }
 
-            // 코루틴으로 DB 저장 처리
-            lifecycleScope.launch(Dispatchers.IO) {
-                // Repository를 통해 DB에 저장
-                ProductRepository.updateProductInfo(requireContext(), newProduct)
+        // Product 객체 생성
+        val newProduct = Product(
+            id = product!!.id,
+            name = name,
+            description = description,
+            price = price,
+            stock = stock,
+            type = type,
+            images = savedImageFiles,
+            reviewCount = 0
+        )
 
-                // UI 업데이트는 메인 스레드에서
-                withContext(Dispatchers.Main) {
-                    Toast.makeText(requireContext(), "상품이 수정되었습니다.", Toast.LENGTH_SHORT).show()
-                    popBackstack()
-                }
+        // 코루틴으로 DB 저장 처리
+        lifecycleScope.launch(Dispatchers.IO) {
+            // Repository를 통해 DB에 저장
+            ProductRepository.updateProductInfo(requireContext(), newProduct)
+
+            // UI 업데이트는 메인 스레드에서
+            withContext(Dispatchers.Main) {
+                Toast.makeText(requireContext(), "상품이 수정되었습니다.", Toast.LENGTH_SHORT).show()
+                popBackstack()
             }
         }
     }
@@ -343,13 +359,28 @@ class EditProductFragment : Fragment(), OnDeleteClickListener {
      * 권한 요청 다이얼로그 표시
      */
     private fun showPermissionContextPopup() {
-        MaterialAlertDialogBuilder(requireContext())
+        AlertDialog.Builder(appContext)
             .setTitle("권한이 필요합니다")
             .setMessage("이미지를 가져오기 위해서는 갤러리 접근 권한이 필요합니다.")
+            .setNegativeButton("취소", null)
             .setPositiveButton("동의") { _, _ ->
                 permissionLauncher.launch(getRequiredPermission())
             }
+            .show()
+    }
+
+    /*
+    * 상품 수정 시 재확인 하는 dialog
+    * */
+    private fun showUpdateProductDialog() {
+        AlertDialog.Builder(appContext)
+            .setTitle("상품 수정")
+            .setMessage("상품을 수정하면 이전 데이터는 지워집니다.")
             .setNegativeButton("취소", null)
+            .setPositiveButton("수정") { _, _ ->
+                updateProduct()
+                appContext.showMessage("상품이 수정되었습니다.")
+            }
             .show()
     }
 }

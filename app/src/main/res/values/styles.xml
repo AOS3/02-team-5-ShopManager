@@ -54,6 +54,10 @@
         <item name="android:textColor">@android:color/holo_red_dark</item>
     </style>
 
+    <style name="AppTextLabel">
+        <item name="android:textSize">14sp</item>
+    </style>
+
     <style name="AppTextLabel.Gray400">
         <item name="android:textColor">@color/gray_400</item>
     </style>
