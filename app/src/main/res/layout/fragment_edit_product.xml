@@ -22,7 +22,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:navigationIcon="@drawable/ic_arrow_back"
-            app:title="상품 등록"
+            app:title="상품 수정"
             app:titleTextAppearance="@style/AppTextTitle" />
 
         <TextView
@@ -323,7 +323,7 @@
             android:layout_marginTop="20dp"
             android:layout_marginBottom="40dp"
             android:background="@drawable/selector_background_button"
-            android:text="@string/button_product_add_text"
+            android:text="@string/button_product_edit_text"
             android:textColor="@color/white"
             android:textSize="16sp"
             android:textStyle="bold"
