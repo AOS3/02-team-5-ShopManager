@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.chip.Chip
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.lion.five.shopmanager.MainActivity
 import com.lion.five.shopmanager.adapter.ProductImageAdapter
 import com.lion.five.shopmanager.data.model.Product
 import com.lion.five.shopmanager.data.repository.ProductRepository
@@ -76,6 +77,7 @@ class AddProductFragment : Fragment(), OnDeleteClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (activity as? MainActivity)?.setBottomNavigationVisibility(false)
         setupListeners()
         setupLayout()
         setupRecyclerView()
@@ -86,6 +88,7 @@ class AddProductFragment : Fragment(), OnDeleteClickListener {
      */
     override fun onDestroyView() {
         super.onDestroyView()
+        (activity as? MainActivity)?.setBottomNavigationVisibility(true)
         _binding = null
     }
 
