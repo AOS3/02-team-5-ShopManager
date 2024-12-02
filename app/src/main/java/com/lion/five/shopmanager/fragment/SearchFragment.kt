@@ -10,6 +10,7 @@ import android.view.inputmethod.InputMethodManager
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import com.lion.five.shopmanager.MainActivity
 import com.lion.five.shopmanager.adapter.ProductAdapter
 import com.lion.five.shopmanager.data.model.Product
 import com.lion.five.shopmanager.data.repository.ProductRepository
@@ -38,12 +39,14 @@ class SearchFragment: Fragment(), OnItemClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (activity as? MainActivity)?.setBottomNavigationVisibility(false)
         setupListeners()
         setupRecyclerView()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
+        (activity as? MainActivity)?.setBottomNavigationVisibility(true)
         _binding = null
     }
 
