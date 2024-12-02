@@ -27,12 +27,35 @@
             app:statusBarScrim="@color/white"
             app:title="상품 상세">
 
-            <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/viewPager_product_image"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:fitsSystemWindows="true"
                 android:layout_width="match_parent"
-                android:scaleType="centerCrop"
-                android:layout_height="match_parent"
-                android:fitsSystemWindows="true" />
+                android:layout_height="match_parent">
+
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/viewPager_product_image"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:fitsSystemWindows="true"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/viewpager_detail_indicator"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="@id/viewPager_product_image"
+                    app:layout_constraintEnd_toEndOf="@id/viewPager_product_image"
+                    app:layout_constraintStart_toStartOf="@id/viewPager_product_image"
+                    app:tabBackground="@drawable/selector_viewpager_indicator"
+                    android:background="@android:color/transparent"
+                    app:tabGravity="center"
+                    app:tabIndicatorHeight="0dp" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/toolbar"
@@ -96,10 +119,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:fontFamily="@font/roboto"
-                tools:text="리뷰 10"
                 android:textSize="11sp"
                 app:layout_constraintBottom_toBottomOf="@id/tv_product_detail_type"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="리뷰 10" />
 
             <TextView
                 android:id="@+id/tv_product_detail_name"

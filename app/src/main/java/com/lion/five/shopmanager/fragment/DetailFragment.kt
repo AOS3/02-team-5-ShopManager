@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.tabs.TabLayoutMediator
 import com.lion.five.shopmanager.MainActivity
 import com.lion.five.shopmanager.R
 import com.lion.five.shopmanager.adapter.ProductDetailAdapter
@@ -68,6 +69,7 @@ class DetailFragment: Fragment() {
 
     private fun setupLayout() {
         with(binding) {
+
             tvProductDetailIsBest.visibility = if (detailProduct.isBest) View.VISIBLE else View.GONE
             tvProductDetailType.text = detailProduct.type
             tvProductDetailName.text = detailProduct.name
@@ -105,7 +107,14 @@ class DetailFragment: Fragment() {
 
     private fun setupViewPager() {
         binding.viewPagerProductImage.adapter = adapter
+
+        TabLayoutMediator(
+            binding.viewpagerDetailIndicator,
+            binding.viewPagerProductImage
+        ) { _, _ -> }.attach()
+
         adapter.submitList(detailProduct.images)
+
     }
 
     private fun actionDelete(){
