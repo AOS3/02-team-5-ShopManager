@@ -2,19 +2,14 @@ package com.lion.five.shopmanager
 
 import android.os.Bundle
 import android.view.View
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.updatePadding
 import androidx.fragment.app.commit
 import androidx.lifecycle.lifecycleScope
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.lion.five.shopmanager.data.Storage
 import com.lion.five.shopmanager.data.repository.ProductRepository
 import com.lion.five.shopmanager.databinding.ActivityMainBinding
 import com.lion.five.shopmanager.fragment.HomeFragment
-import com.lion.five.shopmanager.fragment.LoginFragment
+import com.lion.five.shopmanager.fragment.SignInFragment
 import com.lion.five.shopmanager.fragment.SalesFragment
 import com.lion.five.shopmanager.utils.FileUtil
 import kotlinx.coroutines.Dispatchers
@@ -174,7 +169,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.navigation_login -> {
                     supportFragmentManager.commit {
-                        replace(R.id.container_main, LoginFragment())
+                        replace(R.id.container_main, SignInFragment())
                         setReorderingAllowed(true)
                     }
                     true
@@ -182,6 +177,10 @@ class MainActivity : AppCompatActivity() {
                 else -> false
             }
         }
+    }
+
+    fun setBottomNavigationVisibility(isVisible: Boolean) {
+        binding.bottomNavigationMain.visibility = if (isVisible) View.VISIBLE else View.GONE
     }
 }
 
