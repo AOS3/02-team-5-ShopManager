@@ -15,12 +15,10 @@
 
     <TextView
         android:id="@+id/tv_login_title"
+        style="@style/AppTextLoginTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="로그인"
-        android:textColor="@color/black"
-        android:textSize="58sp"
-        android:textStyle="bold"
+        android:text="@string/title_login"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -43,7 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/selector_background_text_field"
-            android:hint="아이디"
+            android:hint="@string/hint_id"
             android:inputType="text" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -63,33 +61,30 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/selector_background_text_field"
-            android:hint="비밀번호"
+            android:hint="@string/hint_password"
             android:inputType="textPassword" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_login_submit"
+        style="@style/AppLoginButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="40dp"
-        android:background="@drawable/selector_background_button"
-        android:text="로그인"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        android:textStyle="bold"
+        android:text="@string/button_login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tf_login_password" />
 
     <TextView
         android:id="@+id/tv_login_register_label"
+        style="@style/AppTextLabel.Gray400"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="관리자 계정을 등록해주세요"
-        android:textColor="@color/gray_400"
+        android:text="@string/text_register_guide"
         app:layout_constraintEnd_toStartOf="@id/btn_login_register"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="@id/btn_login_submit"
@@ -97,13 +92,10 @@
 
     <Button
         android:id="@+id/btn_login_register"
-        style="@style/Widget.Material3.Button.TextButton"
+        style="@style/AppTextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:text="회원가입"
-        android:textColor="@color/gray_800"
-        android:textStyle="bold"
+        android:text="@string/button_register"
         app:layout_constraintBottom_toBottomOf="@id/tv_login_register_label"
         app:layout_constraintEnd_toEndOf="@id/btn_login_submit"
         app:layout_constraintStart_toEndOf="@id/tv_login_register_label"
@@ -118,28 +110,22 @@
 
     <Button
         android:id="@+id/btn_account_delete"
-        style="@style/Widget.Material3.Button.TextButton"
+        style="@style/AppTextButton.DeleteAccount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
-        android:background="@android:color/transparent"
-        android:text="회원 탈퇴"
-        android:textColor="@android:color/holo_red_dark"
-        android:textStyle="bold"
+        android:text="@string/button_delete_account"
         app:layout_constraintBottom_toBottomOf="@id/btn_account_logout"
         app:layout_constraintEnd_toStartOf="@id/btn_account_logout"
         app:layout_constraintTop_toTopOf="@id/btn_account_logout" />
 
     <Button
         android:id="@+id/btn_account_logout"
-        style="@style/Widget.Material3.Button.TextButton"
+        style="@style/AppTextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
-        android:background="@android:color/transparent"
-        android:text="로그아웃"
-        android:textColor="@color/gray_800"
-        android:textStyle="bold"
+        android:text="@string/button_logout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -160,7 +146,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:text="관리자 계정에 로그인 중입니다."
+        android:text="@string/text_login_success"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/iv_account_auth_image" />
