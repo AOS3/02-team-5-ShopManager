@@ -6,6 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".fragment.SignInFragment">
 
+    <!-- 로그인 화면 -->
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/group_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="tv_login_title,tf_login_id,tf_login_password,btn_login_submit,tv_login_register_label,btn_login_register" />
+
     <TextView
         android:id="@+id/tv_login_title"
         android:layout_width="wrap_content"
@@ -26,7 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="16dp"
-        android:background="@drawable/selector_background_text_field"
+        android:background="@android:color/transparent"
         app:hintEnabled="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,7 +42,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@android:color/transparent"
+            android:background="@drawable/selector_background_text_field"
             android:hint="아이디"
             android:inputType="text" />
 
@@ -46,7 +53,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:background="@drawable/selector_background_text_field"
+        android:background="@android:color/transparent"
         app:hintEnabled="false"
         app:layout_constraintEnd_toEndOf="@id/tf_login_id"
         app:layout_constraintStart_toStartOf="@id/tf_login_id"
@@ -55,7 +62,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@android:color/transparent"
+            android:background="@drawable/selector_background_text_field"
             android:hint="비밀번호"
             android:inputType="textPassword" />
 
@@ -101,4 +108,61 @@
         app:layout_constraintEnd_toEndOf="@id/btn_login_submit"
         app:layout_constraintStart_toEndOf="@id/tv_login_register_label"
         app:layout_constraintTop_toTopOf="@id/tv_login_register_label" />
+
+    <!-- 로그인 후 화면 -->
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/group_dashboard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="btn_account_delete,btn_account_logout,iv_account_auth_image,tv_account_auth_label" />
+
+    <Button
+        android:id="@+id/btn_account_delete"
+        style="@style/Widget.Material3.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:background="@android:color/transparent"
+        android:text="회원 탈퇴"
+        android:textColor="@android:color/holo_red_dark"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/btn_account_logout"
+        app:layout_constraintEnd_toStartOf="@id/btn_account_logout"
+        app:layout_constraintTop_toTopOf="@id/btn_account_logout" />
+
+    <Button
+        android:id="@+id/btn_account_logout"
+        style="@style/Widget.Material3.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:background="@android:color/transparent"
+        android:text="로그아웃"
+        android:textColor="@color/gray_800"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/iv_account_auth_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_authentication"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.4" />
+
+    <TextView
+        android:id="@+id/tv_account_auth_label"
+        style="@style/AppTextTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="관리자 계정에 로그인 중입니다."
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_account_auth_image" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
