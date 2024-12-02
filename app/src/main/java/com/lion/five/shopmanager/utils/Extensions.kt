@@ -40,6 +40,13 @@ fun Context.isLogin() =
     getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
         .getBoolean("is_logged_in", false)
 
+fun Context.saveAccount(id: String, password: String) {
+    getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
+        .edit {
+            putString("account_id", id)
+            putString("account_password", password)
+        }
+}
 
 fun Context.getAccount(): Pair<String, String> =
     getSharedPreferences("user_prefs", Context.MODE_PRIVATE).run {

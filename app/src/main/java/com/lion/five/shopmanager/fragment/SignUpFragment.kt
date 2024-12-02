@@ -1,5 +1,6 @@
 package com.lion.five.shopmanager.fragment
 
+import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,7 +13,10 @@ import androidx.fragment.app.Fragment
 import com.lion.five.shopmanager.MainActivity
 import com.lion.five.shopmanager.databinding.FragmentSignUpBinding
 import com.lion.five.shopmanager.utils.clearFocusAndHideKeyboard
+import com.lion.five.shopmanager.utils.getAccount
 import com.lion.five.shopmanager.utils.popBackstack
+import com.lion.five.shopmanager.utils.saveAccount
+import com.lion.five.shopmanager.utils.showMessage
 
 class SignUpFragment : Fragment() {
     private var _binding: FragmentSignUpBinding? = null
@@ -20,6 +24,13 @@ class SignUpFragment : Fragment() {
 
     private var isId = false
     private var isPassword = false
+
+    private lateinit var appContext: Context
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        appContext = context
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -63,28 +74,29 @@ class SignUpFragment : Fragment() {
             }
 
             btnLoginSubmit.setOnClickListener {
-                val accountId = tfLoginId.editText?.text.toString()
-                val accountPassword = tfLoginPassword.editText?.text.toString()
+                val accountId = tfLoginId.editText?.text?.trim().toString()
+                val accountPassword = tfLoginPassword.editText?.text?.trim().toString()
+                val (savedId, savedPassword) = appContext.getAccount()
 
-                // 계정 정보를 SharedPreferences에 저장
-                requireContext().getSharedPreferences("user_prefs", Context.MODE_PRIVATE).edit {
-                        putString("account_id", accountId)
-                        putString("account_password", accountPassword)
-                    }
+                if (isExistAccount(savedId, savedPassword).not()) {
+                    showOverwriteAccountDialog(accountId, accountPassword)
+                    return@setOnClickListener
+                }
 
-                // 저장 완료 후 처리
-                popBackstack() // 이전 화면으로 돌아가기
+                // 기존 계정이 없는 경우 바로 저장
+                appContext.saveAccount(accountId, accountPassword)
+                appContext.showMessage("계정이 등록되었습니다")
+                popBackstack()
             }
         }
     }
-
 
     /*
      * 아이디 텍스트필드를 확인하여 유효성 검사와 버튼 활성화를 담당하는 함수
      * */
     private fun setupAccountIdTextField() {
         binding.tfLoginId.editText?.doAfterTextChanged { text ->
-            isId = text?.isNotBlank() ?: false
+            isId = text?.trim()?.isNotBlank() ?: false
             updateAddButtonState()
         }
     }
@@ -94,7 +106,7 @@ class SignUpFragment : Fragment() {
      * */
     private fun setupAccountPasswordTextField() {
         binding.tfLoginPassword.editText?.doAfterTextChanged { text ->
-            isPassword = updatePasswordState() && text?.isNotBlank() == true
+            isPassword = updatePasswordState() && text?.trim()?.isNotBlank() == true
             confirmPassword()
             updateAddButtonState()
         }
@@ -133,6 +145,34 @@ class SignUpFragment : Fragment() {
      */
     private fun updateAddButtonState() {
         binding.btnLoginSubmit.isEnabled = isId && isPassword
+    }
+
+    /*
+    * 등록된 계정이 있는지 확인
+    * */
+    private fun isExistAccount(savedId: String, savedPassword: String): Boolean {
+        if (savedId.isBlank() && savedPassword.isBlank()) {
+            appContext.showMessage("등록된 계정이 없습니다.\n회원가입을 먼저 진행해주세요")
+            return true
+        }
+        return false
+    }
+
+    /*
+    * 기존에 계정이 존재하면
+    * 덮어 쓸 것인지 확인하는 dialog
+    * */
+    private fun showOverwriteAccountDialog(accountId: String, accountPassword: String) {
+        AlertDialog.Builder(appContext)
+            .setTitle("계정 덮어쓰기")
+            .setMessage("이미 존재하는 계정이 있습니다.\n등록을 하면 이전 계정은 지워집니다.")
+            .setNegativeButton("아니요", null)
+            .setPositiveButton("예") { _, _ ->
+                appContext.saveAccount(accountId, accountPassword) // 새로운 계정 정보 저장
+                appContext.showMessage("계정이 등록되었습니다")
+                popBackstack()
+            }
+            .show()
     }
 
 }
