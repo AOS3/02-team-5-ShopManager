@@ -32,4 +32,8 @@ interface ProductDAO {
     // 이름으로 상품을 검색하는 메서드
     @Query("SELECT * FROM ProductTable WHERE name LIKE :productName ORDER BY id DESC")
     fun searchProductByName(productName: String): List<ProductVO>
+
+    // 인기 상품의 정보를 가져오는 메서드
+    @Query("SELECT * FROM ProductTable WHERE isBest = 1 LIMIT :limit")
+    fun selectBestProducts(limit: Int): List<ProductVO>
 }
