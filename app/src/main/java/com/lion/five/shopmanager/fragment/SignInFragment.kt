@@ -1,5 +1,6 @@
 package com.lion.five.shopmanager.fragment
 
+import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,7 +13,9 @@ import com.lion.five.shopmanager.utils.clearAccount
 import com.lion.five.shopmanager.utils.getAccount
 import com.lion.five.shopmanager.utils.hideKeyboard
 import com.lion.five.shopmanager.utils.isLogin
+import com.lion.five.shopmanager.utils.popBackstack
 import com.lion.five.shopmanager.utils.replaceFragment
+import com.lion.five.shopmanager.utils.saveAccount
 import com.lion.five.shopmanager.utils.setupLogin
 import com.lion.five.shopmanager.utils.showMessage
 import kotlinx.coroutines.delay
@@ -72,9 +75,8 @@ class SignInFragment : Fragment() {
 
             // 회원탈퇴
             btnAccountDelete.setOnClickListener {
-                appContext.clearAccount()
-                updateViewVisibility()
-                appContext.showMessage("회원 탈퇴되었습니다.")
+                showDeleteAccountDialog()
+                popBackstack()
             }
         }
     }
@@ -163,4 +165,19 @@ class SignInFragment : Fragment() {
         binding.tfLoginPassword.editText?.text?.clear()
     }
 
+    /*
+    * 회원탈퇴 시 재확인하는 dialog
+    * */
+    private fun showDeleteAccountDialog() {
+        AlertDialog.Builder(appContext)
+            .setTitle("계정 삭제")
+            .setMessage("삭제하면 해당 계정으로는\n로그인 할 수 없습니다.")
+            .setNegativeButton("아니요", null)
+            .setPositiveButton("예") { _, _ ->
+                appContext.clearAccount()
+                appContext.showMessage("계정이 탈퇴 되었습니다")
+                updateViewVisibility()
+            }
+            .show()
+    }
 }
