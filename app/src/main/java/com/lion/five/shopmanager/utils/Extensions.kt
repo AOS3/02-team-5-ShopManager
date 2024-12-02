@@ -1,6 +1,8 @@
 package com.lion.five.shopmanager.utils
 
-import android.util.Log
+import android.content.Context
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import com.lion.five.shopmanager.R
@@ -20,4 +22,14 @@ fun Fragment.popBackstack() {
 // 가격을 천 단위로 표시하는 확장함수
 fun Int.toDecimalFormat(): String {
     return DecimalFormat("#,###").format(this)
+}
+
+fun View.clearFocusAndHideKeyboard() {
+    clearFocus()
+    context.hideKeyboard(this)
+}
+
+fun Context.hideKeyboard(view: View) {
+    val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    imm.hideSoftInputFromWindow(view.windowToken, 0)
 }

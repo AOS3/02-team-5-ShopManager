@@ -178,5 +178,9 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
+    fun setBottomNavigationVisibility(isVisible: Boolean) {
+        binding.bottomNavigationMain.visibility = if (isVisible) View.VISIBLE else View.GONE
+    }
 }
 
