@@ -1,23 +1,53 @@
 package com.lion.five.shopmanager
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import androidx.fragment.app.commit
 import com.lion.five.shopmanager.databinding.ActivityMainBinding
+import com.lion.five.shopmanager.fragment.HomeFragment
+import com.lion.five.shopmanager.fragment.SalesFragment
+import com.lion.five.shopmanager.fragment.SignInFragment
 
 class MainActivity : AppCompatActivity() {
     private val binding: ActivityMainBinding by lazy { ActivityMainBinding.inflate(layoutInflater) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(binding.root)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+        setupBottomNavigation()
+    }
+
+    private fun setupBottomNavigation() {
+        binding.bottomNavigationMain.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.navigation_home -> {
+                    supportFragmentManager.commit {
+                        replace(R.id.container_main, HomeFragment())
+                        setReorderingAllowed(true)
+                    }
+                    true
+                }
+                R.id.navigation_sales -> {
+                    supportFragmentManager.commit {
+                        replace(R.id.container_main, SalesFragment())
+                        setReorderingAllowed(true)
+                    }
+                    true
+                }
+                R.id.navigation_login -> {
+                    supportFragmentManager.commit {
+                        replace(R.id.container_main, SignInFragment())
+                        setReorderingAllowed(true)
+                    }
+                    true
+                }
+                else -> false
+            }
         }
+    }
+
+    fun setBottomNavigationVisibility(isVisible: Boolean) {
+        binding.bottomNavigationMain.visibility = if (isVisible) View.VISIBLE else View.GONE
     }
 }
