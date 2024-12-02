@@ -14,7 +14,7 @@ interface ProductDAO {
     fun insertProductData(productVO: ProductVO)
 
     // 상품 정보를 가져오는 메서드
-    @Query("SELECT * FROM ProductTable")
+    @Query("SELECT * FROM ProductTable ORDER BY isBest DESC")
     fun selectProductDataAll(): List<ProductVO>
 
     // 상품 하나의 정보를 가져오는 메서드
