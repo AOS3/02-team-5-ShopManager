@@ -1,5 +1,6 @@
 package com.lion.five.shopmanager.fragment
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import com.lion.five.shopmanager.R
 import com.lion.five.shopmanager.data.model.Product
 import com.lion.five.shopmanager.data.repository.ProductRepository
 import com.lion.five.shopmanager.databinding.FragmentSalesBinding
+import com.lion.five.shopmanager.utils.isLogin
 import com.lion.five.shopmanager.utils.replaceFragment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -19,12 +21,29 @@ class SalesFragment : Fragment() {
     private var _binding: FragmentSalesBinding? = null
     private val binding get() = _binding!!
 
+    private lateinit var appContext: Context
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        appContext = context
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentSalesBinding.inflate(inflater, container, false)
+
+        // 로그인 상태 확인
+        if (appContext.isLogin()) {
+            // 로그인 되었을 경우 SalesFragment UI 표시
+            setupSalesUI()
+        } else {
+            // 로그인 안 되었을 경우 로그인 안내 화면 표시
+            setupLoginPrompt()
+        }
+
         return binding.root
     }
 
@@ -88,6 +107,33 @@ class SalesFragment : Fragment() {
                 }
             }
             replaceFragment(fragment, "DetailFragment")
+        }
+    }
+
+    private fun setupSalesUI() {
+        // 로그인 상태 확인 후 TextView에 아이디 표시
+        val sharedPreferences = requireContext().getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
+        val isLoggedIn = sharedPreferences.getBoolean("is_logged_in", false)
+        val accountId = sharedPreferences.getString("account_id", "")
+        // 로그인 후 UI 설정
+        if (isLoggedIn && accountId != null) {
+            binding.tvSalesMessage.text = "${accountId}님"
+        }
+        binding.llSalesContent.visibility = View.VISIBLE
+        binding.tvMessage.visibility = View.GONE
+        binding.btnReplaceLogin.visibility = View.GONE
+    }
+
+    private fun setupLoginPrompt() {
+        // 로그인되지 않았을 경우 안내 메시지와 로그인 버튼 표시
+        binding.llSalesContent.visibility = View.GONE
+        binding.tvMessage.visibility = View.VISIBLE
+        binding.btnReplaceLogin.visibility = View.VISIBLE
+
+        binding.btnReplaceLogin.setOnClickListener {
+            // 로그인 화면으로 이동
+            val loginFragment = SignInFragment()
+            replaceFragment(loginFragment, "LoginFragment")
         }
     }
 
