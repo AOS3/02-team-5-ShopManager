@@ -201,15 +201,13 @@ class EditProductFragment : Fragment(), OnDeleteClickListener {
         }
 
         // Product 객체 생성
-        val newProduct = Product(
-            id = product!!.id,
+        val newProduct = product!!.copy(
             name = name,
             description = description,
             price = price,
             stock = stock,
             type = type,
             images = savedImageFiles,
-            reviewCount = 0
         )
 
         // 코루틴으로 DB 저장 처리
