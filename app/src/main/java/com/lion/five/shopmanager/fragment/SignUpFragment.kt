@@ -51,7 +51,6 @@ class SignUpFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        (activity as? MainActivity)?.setBottomNavigationVisibility(true)
     }
 
     private fun setupLayout() {

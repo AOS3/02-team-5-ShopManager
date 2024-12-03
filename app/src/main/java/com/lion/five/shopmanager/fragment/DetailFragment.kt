@@ -60,7 +60,6 @@ class DetailFragment: Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        (activity as? MainActivity)?.setBottomNavigationVisibility(true)
         _binding = null
     }
 

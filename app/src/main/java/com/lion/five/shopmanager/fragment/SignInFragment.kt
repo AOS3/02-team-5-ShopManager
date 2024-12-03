@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import com.lion.five.shopmanager.MainActivity
 import com.lion.five.shopmanager.databinding.FragmentSignInBinding
 import com.lion.five.shopmanager.utils.clearAccount
 import com.lion.five.shopmanager.utils.clearFocusAndHideKeyboard
@@ -45,6 +46,7 @@ class SignInFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (activity as? MainActivity)?.setBottomNavigationVisibility(true)
         updateViewVisibility()
         setupListeners()
     }
