@@ -40,7 +40,8 @@ object ProductRepository {
                 stock = vo.stock,
                 reviewCount = vo.reviewCount,
                 isBest = vo.isBest,
-                createAt = vo.createAt
+                createAt = vo.createAt,
+                movieName = vo.movieName
             )
         }
     }
@@ -69,7 +70,8 @@ object ProductRepository {
                 stock = it.stock,
                 reviewCount = it.reviewCount,
                 isBest = it.isBest,
-                createAt = it.createAt
+                createAt = it.createAt,
+                movieName = it.movieName
             )
         }
     }

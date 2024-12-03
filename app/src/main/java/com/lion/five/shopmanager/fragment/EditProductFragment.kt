@@ -19,6 +19,7 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lion.five.shopmanager.R
 import com.lion.five.shopmanager.adapter.ProductImageAdapter
+import com.lion.five.shopmanager.data.MovieName
 import com.lion.five.shopmanager.data.model.Product
 import com.lion.five.shopmanager.data.repository.ProductRepository
 import com.lion.five.shopmanager.databinding.FragmentEditProductBinding
@@ -190,7 +191,8 @@ class EditProductFragment : Fragment(), OnDeleteClickListener {
                 stock = stock,
                 type = type,
                 images = savedImageFiles,
-                reviewCount = 0
+                reviewCount = 0,
+                movieName = MovieName.UNKNOWN
             )
 
             // 코루틴으로 DB 저장 처리
