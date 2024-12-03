@@ -150,11 +150,7 @@ class SignUpFragment : Fragment() {
     * 등록된 계정이 있는지 확인
     * */
     private fun isExistAccount(savedId: String, savedPassword: String): Boolean {
-        if (savedId.isBlank() && savedPassword.isBlank()) {
-            appContext.showMessage("등록된 계정이 없습니다.\n회원가입을 먼저 진행해주세요")
-            return true
-        }
-        return false
+        return savedId.isBlank() && savedPassword.isBlank()
     }
 
     /*
