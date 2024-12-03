@@ -119,6 +119,7 @@ object Storage {
             description = "인사이드 아웃2의 W포켓 클리어파일입니다.",
             images = listOf("pixar_1.jpg", "pixar_2.jpg"),
             stock = 0,
+            isBest = true,
             reviewCount = 0,
         ),
         Product(
@@ -221,6 +222,7 @@ object Storage {
                     "고민하면서도, 자신의 마음의 소리를 믿고 한결같이 나아가는 소녀 모아나의 모습에 용기와 기운을 받을 수 있는, 압권의 노래와 영상으로 보내는 감동의 판타지 어드벤처.",
             images = listOf("disney_9.jpg", "disney_10.jpg"),
             stock = 0,
+            isBest = true,
             reviewCount = 0,
         ),
         Product(
@@ -250,6 +252,7 @@ object Storage {
             description = "해리 포터의 마법의 세계에서 온 황금 스니치 핀",
             images = listOf("harrypotter_5.jpg", "harrypotter_6.jpg"),
             stock = 0,
+            isBest = true,
             reviewCount = 0,
         ),
         Product(
@@ -313,6 +316,7 @@ object Storage {
             description = "예쁜 컴팩트를 열면 나나핑, 솔찌핑, 꾸래핑, 하츄핑의 하우스가 짜잔!",
             images = listOf("teenieping_4.jpg"),
             stock = 0,
+            isBest = true,
             reviewCount = 0,
         ),
         Product(
