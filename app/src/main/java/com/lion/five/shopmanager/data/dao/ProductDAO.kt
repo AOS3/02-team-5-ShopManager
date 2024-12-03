@@ -14,7 +14,7 @@ interface ProductDAO {
     fun insertProductData(productVO: ProductVO)
 
     // 상품 정보를 가져오는 메서드
-    @Query("SELECT * FROM ProductTable")
+    @Query("SELECT * FROM ProductTable ORDER BY isBest DESC")
     fun selectProductDataAll(): List<ProductVO>
 
     // 상품 하나의 정보를 가져오는 메서드
@@ -32,4 +32,8 @@ interface ProductDAO {
     // 이름으로 상품을 검색하는 메서드
     @Query("SELECT * FROM ProductTable WHERE name LIKE :productName ORDER BY id DESC")
     fun searchProductByName(productName: String): List<ProductVO>
+
+    // 카테고리별 상품 조회
+    @Query("SELECT * FROM ProductTable WHERE type = :category ORDER BY isBest DESC")
+    fun selectProductsByCategory(category: String): List<ProductVO>
 }
