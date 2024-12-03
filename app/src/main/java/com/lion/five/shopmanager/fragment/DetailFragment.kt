@@ -65,7 +65,6 @@ class DetailFragment: Fragment() {
 
     private fun setupLayout() {
         with(binding) {
-
             tvProductDetailIsBest.visibility = if (detailProduct.isBest) View.VISIBLE else View.GONE
             tvProductDetailType.text = detailProduct.type
             tvProductDetailName.text = detailProduct.name
