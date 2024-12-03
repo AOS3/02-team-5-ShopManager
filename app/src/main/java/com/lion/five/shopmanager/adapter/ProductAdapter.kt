@@ -4,6 +4,8 @@ import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.lion.five.shopmanager.data.model.Product
 import com.lion.five.shopmanager.databinding.ItemProductBinding
@@ -13,8 +15,7 @@ import com.lion.five.shopmanager.utils.toDecimalFormat
 
 class ProductAdapter(
     private val listener: OnItemClickListener,
-) : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
-    private val items = mutableListOf<Product>()
+) : ListAdapter<Product, ProductAdapter.ProductViewHolder>(ProductDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
         return ProductViewHolder(
@@ -23,19 +24,11 @@ class ProductAdapter(
                 parent,
                 false
             )
-        ) { position -> listener.onItemClick(items[position]) }
+        ) { position -> listener.onItemClick(getItem(position)) }
     }
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
-        holder.bind(items[position])
-    }
-
-    override fun getItemCount(): Int = items.size
-
-    fun submitList(products: List<Product>) {
-        items.clear()
-        items.addAll(products)
-        notifyDataSetChanged()
+        holder.bind(getItem(position))
     }
 
     class ProductViewHolder(
@@ -69,5 +62,16 @@ class ProductAdapter(
                 tvProductType.text = product.type
             }
         }
+    }
+}
+
+class ProductDiffCallback: DiffUtil.ItemCallback<Product>() {
+    override fun areItemsTheSame(oldItem: Product, newItem: Product): Boolean {
+        return oldItem.id == newItem.id
+    }
+
+    override fun areContentsTheSame(oldItem: Product, newItem: Product): Boolean {
+        return oldItem == newItem
+
     }
 }
