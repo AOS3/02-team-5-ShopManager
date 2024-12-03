@@ -12,6 +12,12 @@ import java.text.DecimalFormat
 
 fun Fragment.replaceFragment(fragment: Fragment, tag: String) {
     parentFragmentManager.commit {
+        setCustomAnimations(
+            R.anim.enter_from_right,
+            R.anim.exit_to_left,
+            R.anim.enter_from_left,
+            R.anim.exit_to_right,
+        )
         replace(R.id.container_main, fragment)
         addToBackStack(tag)
     }
