@@ -1,6 +1,8 @@
 package com.lion.five.shopmanager.utils
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
@@ -8,6 +10,7 @@ import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import com.lion.five.shopmanager.R
+import java.io.File
 import java.text.DecimalFormat
 
 fun Fragment.replaceFragment(fragment: Fragment, tag: String) {
@@ -25,6 +28,15 @@ fun Fragment.replaceFragment(fragment: Fragment, tag: String) {
 
 fun Fragment.popBackstack() {
     parentFragmentManager.popBackStack()
+}
+
+// 파일에 저장된 이미지를 로드하는 함수
+fun File.loadImage(sampleSize: Int = 4): Bitmap {
+    return BitmapFactory.Options()
+        .apply { inSampleSize = sampleSize }
+        .let { options ->
+            BitmapFactory.decodeFile(absolutePath, options)
+        }
 }
 
 // 가격을 천 단위로 표시하는 확장함수
