@@ -1,5 +1,6 @@
 package com.lion.five.shopmanager.fragment
 
+import android.app.AlertDialog
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.tabs.TabLayoutMediator
 import com.lion.five.shopmanager.MainActivity
 import com.lion.five.shopmanager.R
@@ -114,11 +114,11 @@ class DetailFragment: Fragment() {
 
     private fun actionDelete(){
         // 다이얼로그를 띄워준다.
-        val materialAlertDialogBuilder = MaterialAlertDialogBuilder(requireContext())
-        materialAlertDialogBuilder.setTitle("정보 삭제")
-        materialAlertDialogBuilder.setMessage("삭제를 할 경우 복원이 불가능합니다.")
-        materialAlertDialogBuilder.setNegativeButton("취소", null)
-        materialAlertDialogBuilder.setPositiveButton("삭제"){ dialogInterface: DialogInterface, i: Int ->
+        AlertDialog.Builder(requireContext())
+            .setTitle("정보 삭제")
+            .setMessage("삭제를 할 경우 복원이 불가능합니다.")
+            .setNegativeButton("취소", null)
+            .setPositiveButton("삭제"){ dialogInterface: DialogInterface, i: Int ->
             lifecycleScope.launch(Dispatchers.Main) {
                 withContext(Dispatchers.IO) {
                     product?.id?.let { ProductRepository.deleteProductById(requireContext(), it) }
