@@ -1,23 +1,43 @@
 <resources>
     <string name="app_name">ShopManager</string>
+
+
+    <!--  상품 등록  -->
+    <string name="hint_product_description_text">상품 설명을 등록해주세요</string>
     <string name="hint_product_name_text">상품명을 등록해주세요</string>
     <string name="label_product_name">상품명</string>
-    <string name="hint_product_description_text">상품 설명을 등록해주세요</string>
-    <string name="label_product_description">설명</string>
     <string name="label_product_stock">재고 수량</string>
-    <string name="hint_product_stock_text">재고</string>
-    <string name="label_product_type">카테고리</string>
     <string name="button_product_add_text">상품등록</string>
     <string name="label_product_add_description">굿즈의 사진을 등록해주세요.</string>
+
+    <!--  상세 페이지  -->
+    <string name="label_edit">수정</string>
+    <string name="label_delete">삭제</string>
+    <string name="label_product_price">가격</string>
+    <string name="label_product_best">BEST</string>
+    <string name="description_product_image">제품 상세 이미지</string>
+    <string name="label_product_type">카테고리</string>
+    <string name="hint_product_stock_text">재고</string>
+    <string name="label_product_description">설명</string>
+
+
+    <!--  카테고리  -->
+    <string name="chip_ghibli">지브리</string>
+    <string name="chip_teenieping">티니핑</string>
     <string name="chip_disney">디즈니</string>
     <string name="chip_pixar">픽사</string>
     <string name="chip_marvel">마블</string>
     <string name="chip_harry_potter">해리포터</string>
-    <string name="description_product_image">제품 상세 이미지</string>
-    <string name="label_product_best">BEST</string>
-    <string name="label_edit">수정</string>
-    <string name="label_delete">삭제</string>
-    <string name="label_product_price">가격</string>
-    <string name="chip_ghibli">지브리</string>
-    <string name="chip_teenieping">티니핑</string>
+
+    <!-- 로그인/계정 관련 -->
+    <string name="title_login">로그인</string>
+    <string name="hint_id">아이디</string>
+    <string name="hint_password">비밀번호</string>
+    <string name="button_login">로그인</string>
+    <string name="text_register_guide">관리자 계정을 등록해주세요</string>
+    <string name="button_register">회원가입</string>
+    <string name="button_logout">로그아웃</string>
+    <string name="button_delete_account">회원 탈퇴</string>
+    <string name="text_login_success">관리자 계정에 로그인 중입니다.</string>
+    <string name="button_product_edit_text">상품 수정</string>
 </resources>

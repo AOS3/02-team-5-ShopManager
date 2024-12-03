@@ -16,5 +16,5 @@ data class Product(
     val reviewCount: Int, // 리뷰 수
     val isBest: Boolean = false, // 기본값 false, 베스트 상품은 true
     val createAt: Long = System.currentTimeMillis(), // 생성 시간, 기본값 현재 시간
-    val movieName: MovieName
+    var movieName: MovieName
 ): Parcelable

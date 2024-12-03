@@ -1,6 +1,7 @@
 package com.lion.five.shopmanager.data.repository
 
 import android.content.Context
+import com.lion.five.shopmanager.data.MovieName
 import com.lion.five.shopmanager.data.dao.ProductDatabase
 import com.lion.five.shopmanager.data.model.Product
 import com.lion.five.shopmanager.data.vo.ProductVO
@@ -105,25 +106,59 @@ object ProductRepository {
         productDatabase.productDAO().updateProductData(productVO)
     }
 
-    // 이름으로 상품을 검색하는 메서드
-    fun searchProductByName(context: Context, productName:String):MutableList<Product>{
-        // 데이터 베이스 객체를 가져온다.
+    // 상품 정보 검색
+    fun searchProductByName(context: Context, productName: String): MutableList<Product> {
+        // 데이터베이스 객체를 가져온다.
         val productDatabase = ProductDatabase.getInstance(context)
-        // 검색결과를 가져옵니다.
-        val productVoList = productDatabase?.productDAO()?.searchProductByName("%$productName%")
-        // 상품 데이터를 담을 리스트
+        // 공백으로 단어 분리
+        val keywords = productName.trim().split("\\s+".toRegex())
+
+        // 검색 쿼리로 첫 번째 키워드만 검색
+        val productVoList = productDatabase?.productDAO()?.searchProductByName("%${keywords.first()}%")
         val productModelList = mutableListOf<Product>()
 
-        // 검색 결과가 있을 경우
-        productVoList?.forEach{
-            // 검색된 상품 데이터를 추출한다.
-            TODO()
-            // 객체에 담는다.
-            val productModel = TODO()
-            // productModelList에 객체를 담는다.
-            productModelList.add(productModel)
+        productVoList?.forEach { vo ->
+            // 모든 키워드가 포함되어 있는 상품만 필터링
+            if (keywords.all { keyword -> vo.name.contains(keyword, ignoreCase = true) }) {
+                val productModel = Product(
+                    id = vo.id,
+                    name = vo.name,
+                    price = vo.price,
+                    type = vo.type,
+                    description = vo.description,
+                    images = vo.images,
+                    stock = vo.stock,
+                    reviewCount = vo.reviewCount,
+                    isBest = vo.isBest,
+                    createAt = vo.createAt,
+                    movieName = vo.movieName
+                )
+                productModelList.add(productModel)
+            }
         }
-        // productModelList를 반환한다.
+
         return productModelList
+    }
+
+    // 인기상품을 가져오는 메서드
+    fun getBestProducts(context: Context, limit: Int): List<Product> {
+        // Room DB에서 isBest가 true인 상품을 가져옵니다.
+        val productDao = ProductDatabase.getInstance(context).productDAO()
+        val voList = productDao.selectBestProducts(limit)
+        return voList.map { vo ->
+            Product(
+                id = vo.id,
+                name = vo.name,
+                price = vo.price,
+                type = vo.type,
+                description = vo.description,
+                images = vo.images,
+                stock = vo.stock,
+                reviewCount = vo.reviewCount,
+                isBest = vo.isBest,
+                createAt = vo.createAt,
+                movieName = vo.movieName
+            )
+        }
     }
 }

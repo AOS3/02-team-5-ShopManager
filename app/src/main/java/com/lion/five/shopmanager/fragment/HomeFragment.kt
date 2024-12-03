@@ -9,6 +9,7 @@ import androidx.lifecycle.lifecycleScope
 import com.google.android.material.chip.Chip
 import com.google.android.material.shape.CornerFamily
 import com.google.android.material.shape.ShapeAppearanceModel
+import com.lion.five.shopmanager.MainActivity
 import com.lion.five.shopmanager.R
 import com.lion.five.shopmanager.adapter.ProductAdapter
 import com.lion.five.shopmanager.data.model.Product
@@ -38,6 +39,7 @@ class HomeFragment : Fragment(), OnItemClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (activity as? MainActivity)?.setBottomNavigationVisibility(true)
         setListeners()
         setupRecyclerView()
         setupChips()

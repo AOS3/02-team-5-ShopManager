@@ -9,13 +9,19 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
+import com.lion.five.shopmanager.MainActivity
 import com.lion.five.shopmanager.adapter.ProductAdapter
-import com.lion.five.shopmanager.data.Storage
 import com.lion.five.shopmanager.data.model.Product
+import com.lion.five.shopmanager.data.repository.ProductRepository
 import com.lion.five.shopmanager.databinding.FragmentSearchBinding
 import com.lion.five.shopmanager.listener.OnItemClickListener
+import com.lion.five.shopmanager.utils.clearFocusAndHideKeyboard
 import com.lion.five.shopmanager.utils.popBackstack
 import com.lion.five.shopmanager.utils.replaceFragment
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class SearchFragment: Fragment(), OnItemClickListener {
     private var _binding: FragmentSearchBinding? = null
@@ -34,6 +40,7 @@ class SearchFragment: Fragment(), OnItemClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (activity as? MainActivity)?.setBottomNavigationVisibility(false)
         setupListeners()
         setupRecyclerView()
     }
@@ -41,6 +48,14 @@ class SearchFragment: Fragment(), OnItemClickListener {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onItemClick(product: Product) {
+        replaceFragment(DetailFragment().apply {
+            arguments = Bundle().apply {
+                putParcelable("product", product)
+            }
+        }, "DetailFragment")
     }
 
     /*
@@ -62,7 +77,7 @@ class SearchFragment: Fragment(), OnItemClickListener {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH){
                     val keyword = tilSearch.editText?.text.toString()
                     searchProductsByName(keyword)
-                    hideKeyboard()
+                    v.clearFocusAndHideKeyboard()
                     true
                 }
                 else{
@@ -75,17 +90,9 @@ class SearchFragment: Fragment(), OnItemClickListener {
                 // 검색 결과 화면 구현하기
                 val keyword = tilSearch.editText?.text.toString()
                 searchProductsByName(keyword)
-                hideKeyboard()
+                it.clearFocusAndHideKeyboard()
             }
         }
-    }
-
-    override fun onItemClick(product: Product) {
-        replaceFragment(DetailFragment().apply {
-            arguments = Bundle().apply {
-                putParcelable("product", product)
-            }
-        }, "DetailFragment")
     }
 
     /*
@@ -96,7 +103,7 @@ class SearchFragment: Fragment(), OnItemClickListener {
     }
 
     // 이름으로 상품 검색
-    fun searchProductsByName(keyword: String) {
+    private fun searchProductsByName(keyword: String) {
         with(binding){
             // 공백을 기준으로 단어들을 분리하여 검색
             val keywords = keyword.trim().split("\\s+".toRegex())
@@ -110,34 +117,24 @@ class SearchFragment: Fragment(), OnItemClickListener {
                 return
             }
 
-            // 여러 단어를 모두 포함하는 상품 찾기
-            val result = Storage.products.filter { product ->
-                // 모든 단어가 포함되어야 함
-                keywords.all { keyword -> product.name.contains(keyword, ignoreCase = true) }
-            }
+            // 백그라운드에서 검색을 처리
+            lifecycleScope.launch(Dispatchers.IO) {
+                val result = ProductRepository.searchProductByName(requireContext(), keyword)
 
-            // 검색 결과 없음 처리
-            if (result.isEmpty()) {
-                rvSearchList.visibility = View.GONE
-                tvNoResults.visibility = View.VISIBLE
-                tvNoResults.text = "검색 결과가 없습니다."
-            } else {
-                rvSearchList.visibility = View.VISIBLE
-                tvNoResults.visibility = View.GONE
-            }
+                // UI 작업은 메인 스레드에서
+                launch(Dispatchers.Main) {
+                    if (result.isEmpty()) {
+                        rvSearchList.visibility = View.GONE
+                        tvNoResults.visibility = View.VISIBLE
+                        tvNoResults.text = "검색 결과가 없습니다."
+                    } else {
+                        rvSearchList.visibility = View.VISIBLE
+                        tvNoResults.visibility = View.GONE
+                    }
 
-            adapter.submitList(result)
+                    adapter.submitList(result)
+                }
+            }
         }
     }
-
-    // 키보드 내리고 포커스 없애기
-    fun hideKeyboard() {
-        // 키보드 숨기기
-        val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(binding.tilSearch.windowToken, 0)
-
-        // EditText에서 포커스 제거
-        binding.tilSearch.editText?.clearFocus()
-    }
-
 }

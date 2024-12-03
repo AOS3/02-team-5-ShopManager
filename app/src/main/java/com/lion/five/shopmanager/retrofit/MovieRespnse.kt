@@ -16,5 +16,5 @@ data class MovieDetail(
 )
 
 data class Director(
-    val directorNm: String // 감독 이름
+    val peopleNm: String // 감독 이름
 )
