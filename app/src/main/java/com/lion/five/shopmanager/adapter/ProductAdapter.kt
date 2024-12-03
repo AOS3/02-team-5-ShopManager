@@ -50,7 +50,7 @@ class ProductAdapter(
                 tvProductTitle.text = product.name
                 tvProductIsBest.isVisible = product.isBest
                 tvProductPrice.text = "${product.price.toDecimalFormat()}원"
-                tvProductReviewCount.text = if (product.reviewCount == 0) "리뷰 없음" else "${product.reviewCount}"
+                tvProductReviewCount.text = if (product.reviewCount == 0) "리뷰 없음" else "리뷰 ${product.reviewCount.toDecimalFormat()}"
                 tvProductType.text = product.type
 
                 // 이미지 로딩 전에 태그 설정

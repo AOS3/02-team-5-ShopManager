@@ -69,9 +69,9 @@ class DetailFragment: Fragment() {
             tvProductDetailType.text = detailProduct.type
             tvProductDetailName.text = detailProduct.name
             tvProductDetailDescription.text = detailProduct.description
-            tvProductDetailPrice.text = "${detailProduct.price?.toDecimalFormat()}"
-            tvProductDetailStock.text = if (detailProduct.stock == 0) "재고 없음" else "재고 ${product?.stock}"
-            tvProductDetailReview.text = if (detailProduct.reviewCount == 0) "리뷰 없음" else "리뷰 ${product?.reviewCount}"
+            tvProductDetailPrice.text = "${detailProduct.price.toDecimalFormat()}"
+            tvProductDetailStock.text = if (detailProduct.stock == 0) "재고 없음" else "재고 ${product?.stock?.toDecimalFormat()}"
+            tvProductDetailReview.text = if (detailProduct.reviewCount == 0) "리뷰 없음" else "리뷰 ${product?.reviewCount?.toDecimalFormat()}"
         }
     }
 
