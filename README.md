@@ -5,7 +5,6 @@
 - **정지석**: 전체 UI 디자인, 전체 UI 구현, 홈 화면, RecyclerView 구현, 로그인 화면 기능 구현
 - **김성한**: 초기 데이터 수집 및 구축, 영화 API 연동
 - **박상원**: 정산 페이지 구성, 이미지 파일 입출력 구현, RoomDB 구축
-
 ---
 일정 수립 및 문서화는 Figma를 이용하였습니다.
 > https://www.figma.com/design/76ct7AROMUCHrdTMtLwiI5/%EC%87%BC%ED%95%91%EC%95%B1-%EC%8B%A4%EC%8A%B5?node-id=1-3699&t=DksZT39deQYcSrCI-1
