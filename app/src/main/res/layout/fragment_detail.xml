@@ -28,9 +28,9 @@
             app:title="상품 상세">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:fitsSystemWindows="true"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:fitsSystemWindows="true">
 
                 <androidx.viewpager2.widget.ViewPager2
                     android:id="@+id/viewPager_product_image"
@@ -47,11 +47,11 @@
                     android:id="@+id/viewpager_detail_indicator"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
                     app:layout_constraintBottom_toBottomOf="@id/viewPager_product_image"
                     app:layout_constraintEnd_toEndOf="@id/viewPager_product_image"
                     app:layout_constraintStart_toStartOf="@id/viewPager_product_image"
                     app:tabBackground="@drawable/selector_viewpager_indicator"
-                    android:background="@android:color/transparent"
                     app:tabGravity="center"
                     app:tabIndicatorHeight="0dp" />
 
@@ -165,6 +165,40 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_product_detail_price"
                 tools:text="설명입니다설명입니다설명입니다설명입니다설명입니다설명입니다설명입니다설명입니다설명입니다설명입니다설명입니다설명입니다설명입니다설명입니다설명입니다설명입니다설명입니다설명입니다설명입니다설명입니다설명입니다설명입니다설명입니다설명입니다설명입니다설명입니다설명입니다설명입니다설명입니다설명입니다설명입니다설명입니다설명입니다" />
+
+            <TextView
+                android:id="@+id/tv_product_detail_movie_info_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="@string/label_product_movie_info"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@id/tv_product_detail_description"
+                app:layout_constraintTop_toBottomOf="@id/tv_product_detail_description" />
+
+            <TextView
+                android:id="@+id/tv_product_detail_movie_info"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="20dp"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/tv_product_detail_movie_info_label"
+                app:layout_constraintTop_toBottomOf="@id/tv_product_detail_movie_info_label" />
+
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:id="@+id/progress_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="32dp"
+                android:indeterminate="true"
+                android:visibility="gone"
+                app:indicatorColor="@color/gray_400"
+                app:layout_constraintStart_toStartOf="@id/tv_product_detail_movie_info"
+                app:layout_constraintTop_toBottomOf="@id/tv_product_detail_movie_info" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

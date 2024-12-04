@@ -78,7 +78,7 @@ class DetailFragment: Fragment() {
 
             lifecycleScope.launch {
                 checkMovieName { movieDetails ->
-                    tvProductDetailDescription.text = "${detailProduct.description}\n\n$movieDetails"
+                    tvProductDetailMovieInfo.text = movieDetails
                 }
             }
         }
@@ -144,40 +144,52 @@ class DetailFragment: Fragment() {
             .show()
     }
 
-    private suspend fun checkMovieName(onResult: (String) -> Unit) {
-        if (detailProduct.movieName.isEmpty()) {
-            onResult("영화 정보가 없습니다.")
-            return
-        }
+    private fun checkMovieName(onResult: (String) -> Unit) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            // 프로그레스바 표시
+            binding.progressBar.visibility = View.VISIBLE
+            binding.tvProductDetailMovieInfo.visibility = View.GONE
 
-        runCatching {
-            val response = withContext(Dispatchers.IO) {
-                RetrofitClient.apiService.getMovieList(
-                    movieName = detailProduct.movieName
-                )
+            if (detailProduct.movieName.isEmpty()) {
+                binding.progressBar.visibility = View.GONE
+                binding.tvProductDetailMovieInfo.visibility = View.VISIBLE
+                onResult("영화 정보가 없습니다.")
+                return@launch
             }
 
-            val movieListResult = response.movieListResult
-            val movie = movieListResult.movieList.firstOrNull()
+            runCatching {
+                val response = withContext(Dispatchers.IO) {
+                    RetrofitClient.apiService.getMovieList(
+                        movieName = detailProduct.movieName
+                    )
+                }
 
-            if (movie != null) {
-                val updatedMovieName = movie.movieNm
-                detailProduct = detailProduct.copy(movieName = updatedMovieName)
-                val director = movie.directors.firstOrNull()?.peopleNm ?: "정보 없음"
+                val movieListResult = response.movieListResult
+                val movie = movieListResult.movieList.firstOrNull()
 
-                val movieDetails = """
-                영화 이름: ${movie.movieNm}
-                감독: $director
-                제작년도: ${movie.openDt}
-                장르: ${movie.genreAlt}
-            """.trimIndent()
-                onResult(movieDetails)
-            } else {
-                onResult("영화 정보를 찾을 수 없습니다.")
+                if (movie != null) {
+                    val updatedMovieName = movie.movieNm
+                    detailProduct = detailProduct.copy(movieName = updatedMovieName)
+                    val director = movie.directors.firstOrNull()?.peopleNm ?: "정보 없음"
+
+                    val movieDetails = """
+                    영화 이름: ${movie.movieNm}
+                    감독: $director
+                    제작년도: ${movie.openDt}
+                    장르: ${movie.genreAlt}
+                """.trimIndent()
+                    onResult(movieDetails)
+                } else {
+                    onResult("영화 정보를 찾을 수 없습니다.")
+                }
+            }.onFailure { e ->
+                Log.e("MovieAPI", "API 호출 실패", e)
+                onResult("API 호출 실패: ${e.message}")
+            }.also {
+                // 성공이든 실패든 프로그레스바 숨기고 텍스트뷰 표시
+                binding.progressBar.visibility = View.GONE
+                binding.tvProductDetailMovieInfo.visibility = View.VISIBLE
             }
-        }.onFailure { e ->
-            Log.e("MovieAPI", "API 호출 실패", e)
-            onResult("API 호출 실패: ${e.message}")
         }
     }
 }
