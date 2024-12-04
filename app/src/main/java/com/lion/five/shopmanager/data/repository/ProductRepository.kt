@@ -1,6 +1,7 @@
 package com.lion.five.shopmanager.data.repository
 
 import android.content.Context
+import com.lion.five.shopmanager.data.MovieName
 import com.lion.five.shopmanager.data.dao.ProductDatabase
 import com.lion.five.shopmanager.data.model.Product
 import com.lion.five.shopmanager.data.vo.ProductVO
@@ -18,7 +19,8 @@ object ProductRepository {
             images = productModel.images,
             stock = productModel.stock,
             reviewCount = productModel.reviewCount,
-            isBest = productModel.isBest
+            isBest = productModel.isBest,
+            movieName = productModel.movieName
         )
 
         productDatabase.productDAO().insertProductData(productVO)
@@ -40,7 +42,8 @@ object ProductRepository {
                 stock = vo.stock,
                 reviewCount = vo.reviewCount,
                 isBest = vo.isBest,
-                createAt = vo.createAt
+                createAt = vo.createAt,
+                movieName = vo.movieName
             )
         }
     }
@@ -69,7 +72,8 @@ object ProductRepository {
                 stock = it.stock,
                 reviewCount = it.reviewCount,
                 isBest = it.isBest,
-                createAt = it.createAt
+                createAt = it.createAt,
+                movieName = it.movieName
             )
         }
     }
@@ -97,7 +101,8 @@ object ProductRepository {
             images = productModel.images,
             stock = productModel.stock,
             reviewCount = productModel.reviewCount,
-            isBest = productModel.isBest
+            isBest = productModel.isBest,
+            movieName = productModel.movieName
         )
 
         productDatabase.productDAO().updateProductData(productVO)
@@ -127,7 +132,8 @@ object ProductRepository {
                     stock = vo.stock,
                     reviewCount = vo.reviewCount,
                     isBest = vo.isBest,
-                    createAt = vo.createAt
+                    createAt = vo.createAt,
+                    movieName = vo.movieName
                 )
                 productModelList.add(productModel)
             }
@@ -152,7 +158,8 @@ object ProductRepository {
                 stock = vo.stock,
                 reviewCount = vo.reviewCount,
                 isBest = vo.isBest,
-                createAt = vo.createAt
+                createAt = vo.createAt,
+                movieName = vo.movieName
             )
         }
     }

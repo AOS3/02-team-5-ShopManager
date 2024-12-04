@@ -14,6 +14,7 @@ object Storage {
             images = listOf("ghibli_1.jpg", "ghibli_2.jpg"),
             stock = 51,
             reviewCount = 1234,
+            movieName = MovieName.HOW_DO_YOU_LIVE
         ),
         Product(
             name = "지브리 Movie Collection 포스터 & 팜플렛 「이웃집 토토로」 세트",
@@ -23,6 +24,7 @@ object Storage {
             images = listOf("ghibli_3.jpg", "ghibli_4.jpg"),
             stock = 520,
             reviewCount = 1230,
+            movieName = MovieName.MY_NEIGHBOR_TOTORO
         ),
         Product(
             name = "지브리 Movie Collection 포스터 & 팜플렛 「센과 치히로의 행방불명」 세트",
@@ -32,6 +34,7 @@ object Storage {
             images = listOf("ghibli_5.jpg", "ghibli_6.jpg", "ghibli_7.jpg"),
             stock = 50,
             reviewCount = 474,
+            movieName = MovieName.SPIRITED_AWAY
         ),
         Product(
             name = "그림 콘티 벼랑 위의 포뇨",
@@ -41,6 +44,7 @@ object Storage {
             images = listOf("ghibli_8.jpg", "ghibli_9.jpg", "ghibli_10.jpg"),
             stock = 470,
             reviewCount = 830,
+            movieName = MovieName.PONYO
         ),
         Product(
             name = "지브리 미술관 오리지널 토토로 인형 세트",
@@ -51,20 +55,22 @@ object Storage {
             stock = 15,
             isBest = true,
             reviewCount = 2451,
+            movieName = MovieName.MY_NEIGHBOR_TOTORO
         ),
 
         // 마블
         Product(
-            name = "[MCS]마블 어벤저스 2024 캘린더(포스터형)",
+            name = "[MCS]마블 어벤져스 2024 캘린더(포스터형)",
             price = 19000,
             type = "마블",
             description = "달력의 쓰임에 충실하면서도 유용하게 사용될 수 있도록 만들었습니다.\n+멀리서도 잘보이는 시안성\n+한눈에 보이는 공휴일, 대체휴일 표기\n+분위기를 살려주는 감성소품 오케이!",
             images = listOf("marvel_1.jpg", "marvel_2.jpg", "marvel_3.jpg"),
             stock = 342,
             reviewCount = 156,
+            movieName = MovieName.AVENGERS
         ),
         Product(
-            name = "INFINITY SAGA 포스터 세트",
+            name = "INFINITY SAGA 어벤져스 포스터 세트",
             price = 45000,
             type = "마블",
             description = "INFINITY SAGA(MARVEL)의 포스터(Movie)입니다.\nMCU의 역대 영화 포스터 22매 세트!\n포스터는 B4사이즈입니다.",
@@ -72,24 +78,27 @@ object Storage {
             stock = 233,
             isBest = true,
             reviewCount = 892,
+            movieName = MovieName.AVENGERS
         ),
         Product(
-            name = "INFINITY SAGA 체인징 카드 컬렉션(VOL.2)",
+            name = "INFINITY SAGA 어벤져스 체인징 카드 컬렉션(VOL.2)",
             price = 6000,
             type = "마블",
             description = "INFINITY SAGA(MARVEL)의 체인징 카드 컬렉션(VOL.2)입니다.\n보는 각도에 따라 그림이 다르게 보입니다.\n전 10종류 중, 랜덤으로 1종류가 들어있습니다.",
             images = listOf("marvel_6.jpg", "marvel_7.jpg"),
             stock = 0,
             reviewCount = 234,
+            movieName = MovieName.AVENGERS
         ),
         Product(
-            name = "INFINITY SAGA 체인징 카드 컬렉션(VOL.1)",
+            name = "INFINITY SAGA 어벤져스 체인징 카드 컬렉션(VOL.1)",
             price = 6000,
             type = "마블",
             description = "INFINITY SAGA(MARVEL)의 체인징 카드 컬렉션(VOL.1)입니다.\n보는 각도에 따라 그림이 다르게 보입니다.\n전 10종류 중, 랜덤으로 1종류가 들어있습니다.",
             images = listOf("marvel_8.jpg", "marvel_9.jpg"),
             stock = 0,
             reviewCount = 0,
+            movieName = MovieName.AVENGERS
         ),
         Product(
             name = "베놈 라스트댄스 티셔츠(검정)",
@@ -99,6 +108,7 @@ object Storage {
             images = listOf("marvel_10.jpg", "marvel_11.jpg"),
             stock = 123,
             reviewCount = 0,
+            movieName = MovieName.VENOM_LAST_DANCE
         ),
 
         // 픽사
@@ -111,6 +121,7 @@ object Storage {
             stock = 234,
             isBest = true,
             reviewCount = 0,
+            movieName = MovieName.INSIDE_OUT
         ),
         Product(
             name = "PIXAR 아트카드 컬렉션 ※전19종",
@@ -120,6 +131,7 @@ object Storage {
             images = listOf("pixar_3.jpg"),
             stock = 453,
             reviewCount = 324,
+            movieName = MovieName.UNKNOWN
         ),
         Product(
             name = "버즈 라이트이어 도킹 피규어 토이스토리4",
@@ -129,6 +141,7 @@ object Storage {
             images = listOf("pixar_4.jpg", "pixar_5.jpg"),
             stock = 0,
             reviewCount = 654,
+            movieName = MovieName.TOY_STORY
         ),
         Product(
             name = "PIXAR UP 컬러포스터카드",
@@ -138,6 +151,7 @@ object Storage {
             images = listOf("pixar_6.jpg", "pixar_7.jpg"),
             stock = 345,
             reviewCount = 123,
+            movieName = MovieName.UNKNOWN
         ),
         Product(
             name = "토이스토리 티셔츠",
@@ -147,6 +161,7 @@ object Storage {
             images = listOf("pixar_8.jpg", "pixar_9.jpg"),
             stock = 234,
             reviewCount = 432,
+            movieName = MovieName.TOY_STORY
         ),
 
         // 디즈니
@@ -158,6 +173,7 @@ object Storage {
             images = listOf("disney_1.jpg", "disney_2.jpg"),
             stock = 432,
             reviewCount = 234,
+            movieName = MovieName.UNKNOWN
         ),
         Product(
             name = "인어공주 홀로그램 클리어파일",
@@ -167,6 +183,7 @@ object Storage {
             images = listOf("disney_3.jpg", "disney_4.jpg"),
             stock = 0,
             reviewCount = 0,
+            movieName = MovieName.THE_LITTLE_MERMAID
         ),
         Product(
             name = "라이온 킹 직소 퍼즐 캔버스 스타일 1000피스 스페셜 아트 컬렉션",
@@ -176,6 +193,7 @@ object Storage {
             images = listOf("disney_5.jpg", "disney_6.jpg"),
             stock = 0,
             reviewCount = 765,
+            movieName = MovieName.THE_LION_KING
         ),
         Product(
             name = "초콜릿 캔 미키 마우스와 친구들",
@@ -185,6 +203,7 @@ object Storage {
             images = listOf("disney_7.jpg", "disney_8.jpg"),
             stock = 543,
             reviewCount = 432,
+            movieName = MovieName.UNKNOWN
         ),
         Product(
             name = "모아나 MovieNEX",
@@ -195,6 +214,7 @@ object Storage {
             stock = 0,
             isBest = true,
             reviewCount = 876,
+            movieName = MovieName.MOANA
         ),
 
         // 해리포터
@@ -206,6 +226,7 @@ object Storage {
             images = listOf("harrypotter_1.jpg", "harrypotter_2.jpg"),
             stock = 234,
             reviewCount = 543,
+            movieName = MovieName.HARRY_POTTER
         ),
         Product(
             name = "해리포터 어드벤트 캘린더 2023 악세사리 오너먼트 Christmas 호그와트 선물",
@@ -215,6 +236,7 @@ object Storage {
             images = listOf("harrypotter_3.jpg", "harrypotter_4.jpg"),
             stock = 0,
             reviewCount = 654,
+            movieName = MovieName.HARRY_POTTER
         ),
         Product(
             name = "Golden Snitch Pin",
@@ -225,6 +247,7 @@ object Storage {
             stock = 432,
             isBest = true,
             reviewCount = 876,
+            movieName = MovieName.HARRY_POTTER
         ),
         Product(
             name = "호그와트 성 조각",
@@ -234,6 +257,7 @@ object Storage {
             images = listOf("harrypotter_7.jpg", "harrypotter_8.jpg"),
             stock = 54,
             reviewCount = 432,
+            movieName = MovieName.HARRY_POTTER
         ),
         Product(
             name = "해리포터 아크릴 마그넷 세트",
@@ -243,6 +267,7 @@ object Storage {
             images = listOf("harrypotter_9.jpg", "harrypotter_10.jpg"),
             stock = 234,
             reviewCount = 543,
+            movieName = MovieName.HARRY_POTTER
         ),
 
         // 티니핑
@@ -254,6 +279,7 @@ object Storage {
             images = listOf("teenieping_1.jpg"),
             stock = 432,
             reviewCount = 765,
+            movieName = MovieName.TEENIEPING
         ),
         Product(
             name = "캐치티니핑 서프라이즈 오뚝이",
@@ -263,6 +289,7 @@ object Storage {
             images = listOf("teenieping_2.jpg"),
             stock = 765,
             reviewCount = 234,
+            movieName = MovieName.TEENIEPING
         ),
         Product(
             name = "캐치티니핑 장난감-플로라하트 왕관세트",
@@ -272,6 +299,7 @@ object Storage {
             images = listOf("teenieping_3.jpg"),
             stock = 432,
             reviewCount = 321,
+            movieName = MovieName.TEENIEPING
         ),
         Product(
             name = "캐치티니핑 하우스",
@@ -282,6 +310,7 @@ object Storage {
             stock = 0,
             isBest = true,
             reviewCount = 0,
+            movieName = MovieName.TEENIEPING
         ),
         Product(
             name = "캐치티니핑 서프라이즈 인형",
@@ -291,6 +320,7 @@ object Storage {
             images = listOf("teenieping_5.jpg"),
             stock = 345,
             reviewCount = 432,
+            movieName = MovieName.TEENIEPING
         )
     )
 

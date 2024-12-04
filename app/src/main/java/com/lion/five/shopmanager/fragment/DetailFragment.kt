@@ -12,16 +12,20 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.lion.five.shopmanager.MainActivity
 import com.lion.five.shopmanager.R
 import com.lion.five.shopmanager.adapter.ProductDetailAdapter
+import com.lion.five.shopmanager.data.MovieName
 import com.lion.five.shopmanager.data.model.Product
 import com.lion.five.shopmanager.data.repository.ProductRepository
 import com.lion.five.shopmanager.databinding.FragmentDetailBinding
 import com.lion.five.shopmanager.utils.FileUtil
+import com.lion.five.shopmanager.retrofit.MovieInfoResponse
+import com.lion.five.shopmanager.retrofit.RetrofitClient
 import com.lion.five.shopmanager.utils.popBackstack
 import com.lion.five.shopmanager.utils.replaceFragment
 import com.lion.five.shopmanager.utils.toDecimalFormat
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import retrofit2.Call
 
 class DetailFragment: Fragment() {
     private var _binding: FragmentDetailBinding? = null
@@ -73,6 +77,10 @@ class DetailFragment: Fragment() {
             tvProductDetailPrice.text = "${detailProduct.price.toDecimalFormat()}"
             tvProductDetailStock.text = if (detailProduct.stock == 0) "재고 없음" else "재고 ${product?.stock?.toDecimalFormat()}"
             tvProductDetailReview.text = if (detailProduct.reviewCount == 0) "리뷰 없음" else "리뷰 ${product?.reviewCount?.toDecimalFormat()}"
+
+            checkMovieName { movieDetails ->
+                tvProductDetailDescription.text = "${detailProduct.description}\n\n$movieDetails"
+            }
         }
     }
 
@@ -134,5 +142,51 @@ class DetailFragment: Fragment() {
             }
         }
             .show()
+    }
+    private fun checkMovieName(onResult: (String) -> Unit) {
+        val movieName = detailProduct.movieName
+        if (movieName.movieName.isEmpty()) {
+            onResult("영화 정보가 없습니다.")
+            return
+        }
+
+        val apiService = RetrofitClient.apiService
+        val call = apiService.getMovieList(movieName = movieName.movieName)
+
+        call.enqueue(object : retrofit2.Callback<MovieInfoResponse> {
+            override fun onResponse(
+                call: Call<MovieInfoResponse>,
+                response: retrofit2.Response<MovieInfoResponse>
+            ) {
+                if (response.isSuccessful) {
+                    val movieListResult = response.body()?.movieListResult
+                    val movie = movieListResult?.movieList?.firstOrNull()
+
+                    if (movie != null) {
+                        val updatedMovieName = MovieName.values()
+                            .find { it.movieName == movie.movieNm } ?: MovieName.UNKNOWN
+
+                        detailProduct = detailProduct.copy(movieName = updatedMovieName)
+
+                        val director = movie.directors.firstOrNull()?.peopleNm ?: "정보 없음"
+                        val movieDetails = """
+                        영화 이름: ${movie.movieNm}
+                        감독: $director
+                        제작년도: ${movie.openDt}
+                        장르: ${movie.genreAlt}
+                    """.trimIndent()
+                        onResult(movieDetails)
+                    } else {
+                        onResult("영화 정보를 찾을 수 없습니다.")
+                    }
+                } else {
+                    onResult("응답 실패: ${response.message()}")
+                }
+            }
+
+            override fun onFailure(call: Call<MovieInfoResponse>, t: Throwable) {
+                onResult("API 호출 실패: ${t.message}")
+            }
+        })
     }
 }

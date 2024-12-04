@@ -21,12 +21,12 @@ import com.google.android.material.chip.Chip
 import com.lion.five.shopmanager.MainActivity
 import com.lion.five.shopmanager.R
 import com.lion.five.shopmanager.adapter.ProductImageAdapter
+import com.lion.five.shopmanager.data.MovieName
 import com.lion.five.shopmanager.data.model.Product
 import com.lion.five.shopmanager.data.repository.ProductRepository
 import com.lion.five.shopmanager.databinding.FragmentEditProductBinding
 import com.lion.five.shopmanager.listener.OnDeleteClickListener
 import com.lion.five.shopmanager.utils.FileUtil
-import com.lion.five.shopmanager.utils.clearAccount
 import com.lion.five.shopmanager.utils.popBackstack
 import com.lion.five.shopmanager.utils.showMessage
 import kotlinx.coroutines.Dispatchers
@@ -208,7 +208,9 @@ class EditProductFragment : Fragment(), OnDeleteClickListener {
             stock = stock,
             type = type,
             images = savedImageFiles,
-        )
+            reviewCount = 0,
+            movieName = checkMovieName(name)
+            )
 
         // 코루틴으로 DB 저장 처리
         lifecycleScope.launch(Dispatchers.IO) {
@@ -382,5 +384,24 @@ class EditProductFragment : Fragment(), OnDeleteClickListener {
                 appContext.showMessage("상품이 수정되었습니다.")
             }
             .show()
+    }
+
+    private fun checkMovieName(name: String): MovieName {
+        return when {
+            name.contains("그대들은 어떻게 살 것인가") -> MovieName.HOW_DO_YOU_LIVE
+            name.contains("이웃집 토토로") -> MovieName.MY_NEIGHBOR_TOTORO
+            name.contains("센과 치히로의 행방불명") -> MovieName.SPIRITED_AWAY
+            name.contains("벼랑 위의 포뇨") -> MovieName.PONYO
+            name.contains("어벤져스") -> MovieName.AVENGERS
+            name.contains("베놈 라스트 댄스") -> MovieName.VENOM_LAST_DANCE
+            name.contains("인사이드 아웃") -> MovieName.INSIDE_OUT
+            name.contains("토이스토리") -> MovieName.TOY_STORY
+            name.contains("인어공주") -> MovieName.THE_LITTLE_MERMAID
+            name.contains("라이온 킹") -> MovieName.THE_LION_KING
+            name.contains("모아나") -> MovieName.MOANA
+            name.contains("해리포터") -> MovieName.HARRY_POTTER
+            name.contains("티니핑") -> MovieName.TEENIEPING
+            else -> MovieName.UNKNOWN
+        }
     }
 }

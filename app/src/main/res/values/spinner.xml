@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="product_category_list">
+        <item>그대들은 어떻게 살 것인가</item>
+        <item>해리포터</item>
+        <item>티니핑</item>
+        <item>어벤져스</item>
+        <item>이웃집 토토로</item>
+    </string-array>
+</resources>

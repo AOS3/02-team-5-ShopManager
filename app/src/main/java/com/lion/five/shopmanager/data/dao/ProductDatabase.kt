@@ -42,6 +42,7 @@ abstract class ProductDatabase : RoomDatabase() {
                         stock = product.stock,
                         reviewCount = product.reviewCount,
                         isBest = product.isBest,
+                        movieName = product.movieName
                     )
                     dao.insertProductData(productVO)
                 }
