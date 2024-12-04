@@ -19,7 +19,6 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lion.five.shopmanager.MainActivity
 import com.lion.five.shopmanager.adapter.ProductImageAdapter
-import com.lion.five.shopmanager.data.MovieName
 import com.lion.five.shopmanager.data.model.Product
 import com.lion.five.shopmanager.data.repository.ProductRepository
 import com.lion.five.shopmanager.databinding.FragmentAddProductBinding
@@ -164,7 +163,7 @@ class AddProductFragment : Fragment(), OnDeleteClickListener {
                 type = type,
                 images = savedImageFiles,
                 reviewCount = 0,
-                movieName = MovieName.UNKNOWN
+                movieName = ""
             )
 
             lifecycleScope.launch(Dispatchers.IO) {

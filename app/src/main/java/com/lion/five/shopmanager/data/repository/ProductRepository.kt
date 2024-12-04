@@ -1,7 +1,6 @@
 package com.lion.five.shopmanager.data.repository
 
 import android.content.Context
-import com.lion.five.shopmanager.data.MovieName
 import com.lion.five.shopmanager.data.dao.ProductDatabase
 import com.lion.five.shopmanager.data.model.Product
 import com.lion.five.shopmanager.data.vo.ProductVO

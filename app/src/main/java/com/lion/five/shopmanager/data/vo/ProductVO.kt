@@ -2,7 +2,6 @@ package com.lion.five.shopmanager.data.vo
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.lion.five.shopmanager.data.MovieName
 
 @Entity(tableName = "ProductTable")
 data class ProductVO (
@@ -18,5 +17,5 @@ data class ProductVO (
     // 기본값 false, 베스트 상품에만 객체 생성 시 true
     var isBest:Boolean = false,
     var createAt:Long = System.currentTimeMillis(),
-    var movieName: MovieName = MovieName.UNKNOWN
+    var movieName: String = ""
 )

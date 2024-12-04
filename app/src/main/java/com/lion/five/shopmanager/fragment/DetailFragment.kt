@@ -12,7 +12,6 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.lion.five.shopmanager.MainActivity
 import com.lion.five.shopmanager.R
 import com.lion.five.shopmanager.adapter.ProductDetailAdapter
-import com.lion.five.shopmanager.data.MovieName
 import com.lion.five.shopmanager.data.model.Product
 import com.lion.five.shopmanager.data.repository.ProductRepository
 import com.lion.five.shopmanager.databinding.FragmentDetailBinding
@@ -145,13 +144,13 @@ class DetailFragment: Fragment() {
     }
     private fun checkMovieName(onResult: (String) -> Unit) {
         val movieName = detailProduct.movieName
-        if (movieName.movieName.isEmpty()) {
+        if (movieName.isEmpty()) {
             onResult("영화 정보가 없습니다.")
             return
         }
 
         val apiService = RetrofitClient.apiService
-        val call = apiService.getMovieList(movieName = movieName.movieName)
+        val call = apiService.getMovieList(movieName = movieName)
 
         call.enqueue(object : retrofit2.Callback<MovieInfoResponse> {
             override fun onResponse(
@@ -163,12 +162,10 @@ class DetailFragment: Fragment() {
                     val movie = movieListResult?.movieList?.firstOrNull()
 
                     if (movie != null) {
-                        val updatedMovieName = MovieName.values()
-                            .find { it.movieName == movie.movieNm } ?: MovieName.UNKNOWN
-
+                        val updatedMovieName = movie.movieNm
                         detailProduct = detailProduct.copy(movieName = updatedMovieName)
-
                         val director = movie.directors.firstOrNull()?.peopleNm ?: "정보 없음"
+
                         val movieDetails = """
                         영화 이름: ${movie.movieNm}
                         감독: $director

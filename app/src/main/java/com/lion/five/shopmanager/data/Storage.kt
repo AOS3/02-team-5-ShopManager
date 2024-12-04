@@ -14,7 +14,7 @@ object Storage {
             images = listOf("ghibli_1.jpg", "ghibli_2.jpg"),
             stock = 51,
             reviewCount = 1234,
-            movieName = MovieName.HOW_DO_YOU_LIVE
+            movieName = "그대들은 어떻게 살 것인가"
         ),
         Product(
             name = "지브리 Movie Collection 포스터 & 팜플렛 「이웃집 토토로」 세트",
@@ -24,7 +24,7 @@ object Storage {
             images = listOf("ghibli_3.jpg", "ghibli_4.jpg"),
             stock = 520,
             reviewCount = 1230,
-            movieName = MovieName.MY_NEIGHBOR_TOTORO
+            movieName = "이웃집 토토로"
         ),
         Product(
             name = "지브리 Movie Collection 포스터 & 팜플렛 「센과 치히로의 행방불명」 세트",
@@ -34,7 +34,7 @@ object Storage {
             images = listOf("ghibli_5.jpg", "ghibli_6.jpg", "ghibli_7.jpg"),
             stock = 50,
             reviewCount = 474,
-            movieName = MovieName.SPIRITED_AWAY
+            movieName = "센과 치히로의 행방불명"
         ),
         Product(
             name = "그림 콘티 벼랑 위의 포뇨",
@@ -44,7 +44,7 @@ object Storage {
             images = listOf("ghibli_8.jpg", "ghibli_9.jpg", "ghibli_10.jpg"),
             stock = 470,
             reviewCount = 830,
-            movieName = MovieName.PONYO
+            movieName = "벼랑 위의 포뇨"
         ),
         Product(
             name = "지브리 미술관 오리지널 토토로 인형 세트",
@@ -55,7 +55,7 @@ object Storage {
             stock = 15,
             isBest = true,
             reviewCount = 2451,
-            movieName = MovieName.MY_NEIGHBOR_TOTORO
+            movieName = "이웃집 토토로"
         ),
 
         // 마블
@@ -67,7 +67,7 @@ object Storage {
             images = listOf("marvel_1.jpg", "marvel_2.jpg", "marvel_3.jpg"),
             stock = 342,
             reviewCount = 156,
-            movieName = MovieName.AVENGERS
+            movieName = "어벤져스"
         ),
         Product(
             name = "INFINITY SAGA 어벤져스 포스터 세트",
@@ -78,7 +78,7 @@ object Storage {
             stock = 233,
             isBest = true,
             reviewCount = 892,
-            movieName = MovieName.AVENGERS
+            movieName = "어벤져스"
         ),
         Product(
             name = "INFINITY SAGA 어벤져스 체인징 카드 컬렉션(VOL.2)",
@@ -88,7 +88,7 @@ object Storage {
             images = listOf("marvel_6.jpg", "marvel_7.jpg"),
             stock = 0,
             reviewCount = 234,
-            movieName = MovieName.AVENGERS
+            movieName = "어벤져스"
         ),
         Product(
             name = "INFINITY SAGA 어벤져스 체인징 카드 컬렉션(VOL.1)",
@@ -98,7 +98,7 @@ object Storage {
             images = listOf("marvel_8.jpg", "marvel_9.jpg"),
             stock = 0,
             reviewCount = 0,
-            movieName = MovieName.AVENGERS
+            movieName = "어벤져스"
         ),
         Product(
             name = "베놈 티셔츠(검정)",
@@ -108,7 +108,7 @@ object Storage {
             images = listOf("marvel_10.jpg", "marvel_11.jpg"),
             stock = 123,
             reviewCount = 0,
-            movieName = MovieName.VENOM_LAST_DANCE
+            movieName = "베놈 라스트 댄스"
         ),
 
         // 픽사
@@ -121,7 +121,7 @@ object Storage {
             stock = 234,
             isBest = true,
             reviewCount = 0,
-            movieName = MovieName.INSIDE_OUT
+            movieName = "인사이드 아웃"
         ),
         Product(
             name = "PIXAR 아트카드 컬렉션 ※전19종",
@@ -131,7 +131,7 @@ object Storage {
             images = listOf("pixar_3.jpg"),
             stock = 453,
             reviewCount = 324,
-            movieName = MovieName.UNKNOWN
+            movieName = ""
         ),
         Product(
             name = "버즈 라이트이어 도킹 피규어 토이스토리4",
@@ -141,7 +141,7 @@ object Storage {
             images = listOf("pixar_4.jpg", "pixar_5.jpg"),
             stock = 0,
             reviewCount = 654,
-            movieName = MovieName.TOY_STORY
+            movieName = "토이스토리"
         ),
         Product(
             name = "PIXAR UP 컬러포스터카드",
@@ -151,7 +151,7 @@ object Storage {
             images = listOf("pixar_6.jpg", "pixar_7.jpg"),
             stock = 345,
             reviewCount = 123,
-            movieName = MovieName.UNKNOWN
+            movieName = ""
         ),
         Product(
             name = "토이스토리 티셔츠",
@@ -161,7 +161,7 @@ object Storage {
             images = listOf("pixar_8.jpg", "pixar_9.jpg"),
             stock = 234,
             reviewCount = 432,
-            movieName = MovieName.TOY_STORY
+            movieName = "토이스토리"
         ),
 
         // 디즈니
@@ -173,7 +173,7 @@ object Storage {
             images = listOf("disney_1.jpg", "disney_2.jpg"),
             stock = 432,
             reviewCount = 234,
-            movieName = MovieName.UNKNOWN
+            movieName = ""
         ),
         Product(
             name = "인어공주 홀로그램 클리어파일",
@@ -183,7 +183,7 @@ object Storage {
             images = listOf("disney_3.jpg", "disney_4.jpg"),
             stock = 0,
             reviewCount = 0,
-            movieName = MovieName.THE_LITTLE_MERMAID
+            movieName = "인어공주"
         ),
         Product(
             name = "라이온 킹 직소 퍼즐 캔버스 스타일 1000피스 스페셜 아트 컬렉션",
@@ -193,7 +193,7 @@ object Storage {
             images = listOf("disney_5.jpg", "disney_6.jpg"),
             stock = 0,
             reviewCount = 765,
-            movieName = MovieName.THE_LION_KING
+            movieName = "라이온 킹"
         ),
         Product(
             name = "초콜릿 캔 미키 마우스와 친구들",
@@ -203,7 +203,7 @@ object Storage {
             images = listOf("disney_7.jpg", "disney_8.jpg"),
             stock = 543,
             reviewCount = 432,
-            movieName = MovieName.UNKNOWN
+            movieName = ""
         ),
         Product(
             name = "모아나 MovieNEX",
@@ -214,7 +214,7 @@ object Storage {
             stock = 0,
             isBest = true,
             reviewCount = 876,
-            movieName = MovieName.MOANA
+            movieName = "모아나"
         ),
 
         // 해리포터
@@ -226,7 +226,7 @@ object Storage {
             images = listOf("harrypotter_1.jpg", "harrypotter_2.jpg"),
             stock = 234,
             reviewCount = 543,
-            movieName = MovieName.HARRY_POTTER
+            movieName = "해리포터"
         ),
         Product(
             name = "해리포터 어드벤트 캘린더 2023 악세사리 오너먼트 Christmas 호그와트 선물",
@@ -236,7 +236,7 @@ object Storage {
             images = listOf("harrypotter_3.jpg", "harrypotter_4.jpg"),
             stock = 0,
             reviewCount = 654,
-            movieName = MovieName.HARRY_POTTER
+            movieName = "해리포터"
         ),
         Product(
             name = "해리포터 Golden Snitch Pin",
@@ -247,7 +247,7 @@ object Storage {
             stock = 432,
             isBest = true,
             reviewCount = 876,
-            movieName = MovieName.HARRY_POTTER
+            movieName = "해리포터"
         ),
         Product(
             name = "해리포터 호그와트 성 조각",
@@ -257,7 +257,7 @@ object Storage {
             images = listOf("harrypotter_7.jpg", "harrypotter_8.jpg"),
             stock = 54,
             reviewCount = 432,
-            movieName = MovieName.HARRY_POTTER
+            movieName = "해리포터"
         ),
         Product(
             name = "해리포터 아크릴 마그넷 세트",
@@ -267,7 +267,7 @@ object Storage {
             images = listOf("harrypotter_9.jpg", "harrypotter_10.jpg"),
             stock = 234,
             reviewCount = 543,
-            movieName = MovieName.HARRY_POTTER
+            movieName = "해리포터"
         ),
 
         // 티니핑
@@ -279,7 +279,7 @@ object Storage {
             images = listOf("teenieping_1.jpg"),
             stock = 432,
             reviewCount = 765,
-            movieName = MovieName.TEENIEPING
+            movieName = "티니핑"
         ),
         Product(
             name = "캐치티니핑 서프라이즈 오뚝이",
@@ -289,7 +289,7 @@ object Storage {
             images = listOf("teenieping_2.jpg"),
             stock = 765,
             reviewCount = 234,
-            movieName = MovieName.TEENIEPING
+            movieName = "티니핑"
         ),
         Product(
             name = "캐치티니핑 장난감-플로라하트 왕관세트",
@@ -299,7 +299,7 @@ object Storage {
             images = listOf("teenieping_3.jpg"),
             stock = 432,
             reviewCount = 321,
-            movieName = MovieName.TEENIEPING
+            movieName = "티니핑"
         ),
         Product(
             name = "캐치티니핑 하우스",
@@ -310,7 +310,7 @@ object Storage {
             stock = 0,
             isBest = true,
             reviewCount = 0,
-            movieName = MovieName.TEENIEPING
+            movieName = "티니핑"
         ),
         Product(
             name = "캐치티니핑 서프라이즈 인형",
@@ -320,7 +320,7 @@ object Storage {
             images = listOf("teenieping_5.jpg"),
             stock = 345,
             reviewCount = 432,
-            movieName = MovieName.TEENIEPING
+            movieName = "티니핑"
         )
     )
 

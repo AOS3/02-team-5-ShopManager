@@ -1,7 +1,6 @@
 package com.lion.five.shopmanager.data.converter
 
 import androidx.room.TypeConverter
-import com.lion.five.shopmanager.data.MovieName
 
 class Converters {
 
@@ -17,15 +16,4 @@ class Converters {
         return data?.split(",")
     }
 
-    // Enum -> String 변환
-    @TypeConverter
-    fun fromMovieName(movieName: MovieName?): String? {
-        return movieName?.movieName
-    }
-
-    // String -> Enum 변환
-    @TypeConverter
-    fun toMovieName(value: String?): MovieName {
-        return MovieName.values().find { it.movieName == value } ?: MovieName.UNKNOWN
-    }
 }
