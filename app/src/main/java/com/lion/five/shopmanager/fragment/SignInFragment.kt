@@ -157,7 +157,7 @@ class SignInFragment : Fragment() {
     * */
     private fun delayTime() {
         viewLifecycleOwner.lifecycleScope.launch {
-            delay(200)
+            delay(500)
         }
     }
 

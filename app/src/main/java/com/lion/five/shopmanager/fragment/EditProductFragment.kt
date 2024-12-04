@@ -200,9 +200,8 @@ class EditProductFragment : Fragment(), OnDeleteClickListener {
             FileUtil.saveImageFromUri(requireContext(), uri)
         }
 
-            // Product 객체 생성
-        val newProduct = Product(
-            id = product!!.id,
+        // Product 객체 생성
+        val newProduct = product!!.copy(
             name = name,
             description = description,
             price = price,
@@ -224,7 +223,6 @@ class EditProductFragment : Fragment(), OnDeleteClickListener {
                 popBackstack()
             }
         }
-
     }
 
     /**

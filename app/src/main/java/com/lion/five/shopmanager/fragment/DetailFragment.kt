@@ -1,14 +1,13 @@
 package com.lion.five.shopmanager.fragment
 
+import android.app.AlertDialog
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.tabs.TabLayoutMediator
 import com.lion.five.shopmanager.MainActivity
 import com.lion.five.shopmanager.R
@@ -17,6 +16,7 @@ import com.lion.five.shopmanager.data.MovieName
 import com.lion.five.shopmanager.data.model.Product
 import com.lion.five.shopmanager.data.repository.ProductRepository
 import com.lion.five.shopmanager.databinding.FragmentDetailBinding
+import com.lion.five.shopmanager.utils.FileUtil
 import com.lion.five.shopmanager.retrofit.MovieInfoResponse
 import com.lion.five.shopmanager.retrofit.RetrofitClient
 import com.lion.five.shopmanager.utils.popBackstack
@@ -74,9 +74,9 @@ class DetailFragment: Fragment() {
             tvProductDetailType.text = detailProduct.type
             tvProductDetailName.text = detailProduct.name
             tvProductDetailDescription.text = detailProduct.description
-            tvProductDetailPrice.text = "${detailProduct.price?.toDecimalFormat()}"
-            tvProductDetailStock.text = if (detailProduct.stock == 0) "재고 없음" else "재고 ${product?.stock}"
-            tvProductDetailReview.text = if (detailProduct.reviewCount == 0) "리뷰 없음" else "리뷰 ${product?.reviewCount}"
+            tvProductDetailPrice.text = "${detailProduct.price.toDecimalFormat()}"
+            tvProductDetailStock.text = if (detailProduct.stock == 0) "재고 없음" else "재고 ${product?.stock?.toDecimalFormat()}"
+            tvProductDetailReview.text = if (detailProduct.reviewCount == 0) "리뷰 없음" else "리뷰 ${product?.reviewCount?.toDecimalFormat()}"
 
             checkMovieName { movieDetails ->
                 tvProductDetailDescription.text = "${detailProduct.description}\n\n$movieDetails"
@@ -123,13 +123,19 @@ class DetailFragment: Fragment() {
 
     private fun actionDelete(){
         // 다이얼로그를 띄워준다.
-        val materialAlertDialogBuilder = MaterialAlertDialogBuilder(requireContext())
-        materialAlertDialogBuilder.setTitle("정보 삭제")
-        materialAlertDialogBuilder.setMessage("삭제를 할 경우 복원이 불가능합니다.")
-        materialAlertDialogBuilder.setNegativeButton("취소", null)
-        materialAlertDialogBuilder.setPositiveButton("삭제"){ dialogInterface: DialogInterface, i: Int ->
+        AlertDialog.Builder(requireContext())
+            .setTitle("정보 삭제")
+            .setMessage("삭제를 할 경우 복원이 불가능합니다.")
+            .setNegativeButton("취소", null)
+            .setPositiveButton("삭제"){ dialogInterface: DialogInterface, i: Int ->
             lifecycleScope.launch(Dispatchers.Main) {
                 withContext(Dispatchers.IO) {
+                    // 이미지 파일 삭제
+                    detailProduct.images.forEach { fileName ->
+                        FileUtil.deleteImage(requireContext(), fileName)
+                    }
+
+                    // Room DB에서 product삭제
                     product?.id?.let { ProductRepository.deleteProductById(requireContext(), it) }
                 }
                 popBackstack()
