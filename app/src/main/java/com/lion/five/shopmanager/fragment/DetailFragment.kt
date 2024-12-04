@@ -74,8 +74,8 @@ class DetailFragment: Fragment() {
             tvProductDetailName.text = detailProduct.name
             tvProductDetailDescription.text = detailProduct.description
             tvProductDetailPrice.text = "${detailProduct.price.toDecimalFormat()}"
-            tvProductDetailStock.text = if (detailProduct.stock == 0) "재고 없음" else "재고 ${product?.stock?.toDecimalFormat()}"
-            tvProductDetailReview.text = if (detailProduct.reviewCount == 0) "리뷰 없음" else "리뷰 ${product?.reviewCount?.toDecimalFormat()}"
+            tvProductDetailStock.text = if (detailProduct.stock == 0) "재고 없음" else "재고 ${detailProduct.stock.toDecimalFormat()}"
+            tvProductDetailReview.text = if (detailProduct.reviewCount == 0) "리뷰 없음" else "리뷰 ${detailProduct.reviewCount.toDecimalFormat()}"
 
             checkMovieName { movieDetails ->
                 tvProductDetailDescription.text = "${detailProduct.description}\n\n$movieDetails"
