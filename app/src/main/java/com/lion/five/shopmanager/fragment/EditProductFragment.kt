@@ -389,11 +389,11 @@ class EditProductFragment : Fragment(), OnDeleteClickListener {
     private fun checkMovieName(name: String): MovieName {
         return when {
             name.contains("그대들은 어떻게 살 것인가") -> MovieName.HOW_DO_YOU_LIVE
-            name.contains("이웃집 토토로") -> MovieName.MY_NEIGHBOR_TOTORO
+            name.contains("토토로") -> MovieName.MY_NEIGHBOR_TOTORO
             name.contains("센과 치히로의 행방불명") -> MovieName.SPIRITED_AWAY
-            name.contains("벼랑 위의 포뇨") -> MovieName.PONYO
+            name.contains("포뇨") -> MovieName.PONYO
             name.contains("어벤져스") -> MovieName.AVENGERS
-            name.contains("베놈 라스트 댄스") -> MovieName.VENOM_LAST_DANCE
+            name.contains("베놈") -> MovieName.VENOM_LAST_DANCE
             name.contains("인사이드 아웃") -> MovieName.INSIDE_OUT
             name.contains("토이스토리") -> MovieName.TOY_STORY
             name.contains("인어공주") -> MovieName.THE_LITTLE_MERMAID

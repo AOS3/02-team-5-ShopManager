@@ -6,7 +6,7 @@ enum class MovieName(val movieName: String) {
     SPIRITED_AWAY("센과 치히로의 행방불명"),
     PONYO("벼랑 위의 포뇨"),
     AVENGERS("어벤져스"),
-    VENOM_LAST_DANCE("베놈 라스트 댄스"),
+    VENOM_LAST_DANCE("베놈"),
     INSIDE_OUT("인사이드 아웃"),
     TOY_STORY("토이스토리"),
     THE_LITTLE_MERMAID("인어공주"),

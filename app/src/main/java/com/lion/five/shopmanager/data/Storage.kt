@@ -101,7 +101,7 @@ object Storage {
             movieName = MovieName.AVENGERS
         ),
         Product(
-            name = "베놈 라스트댄스 티셔츠(검정)",
+            name = "베놈 티셔츠(검정)",
             price = 48000,
             type = "마블",
             description = "베놈 라스트 댄스의 티셔츠(L사이즈)입니다.\n뒤쪽에도 디자인 있습니다.",
@@ -219,7 +219,7 @@ object Storage {
 
         // 해리포터
         Product(
-            name = "2023년 세컨드 에디션 컬렉터 지팡이",
+            name = "해리포터 2023년 세컨드 에디션 컬렉터 지팡이",
             price = 75000,
             type = "해리포터",
             description = "해리포터 마법의 세계의 컬렉터 에디션 지팡이.",
@@ -239,7 +239,7 @@ object Storage {
             movieName = MovieName.HARRY_POTTER
         ),
         Product(
-            name = "Golden Snitch Pin",
+            name = "해리포터 Golden Snitch Pin",
             price = 12000,
             type = "해리포터",
             description = "해리 포터의 마법의 세계에서 온 황금 스니치 핀",
@@ -250,7 +250,7 @@ object Storage {
             movieName = MovieName.HARRY_POTTER
         ),
         Product(
-            name = "호그와트 성 조각",
+            name = "해리포터 호그와트 성 조각",
             price = 350000,
             type = "해리포터",
             description = "호그와트 마법 학교의 상세한 건축 모형입니다. 섬세한 디테일과 함께 마법 세계의 상징적인 건물을 재현했습니다.",
