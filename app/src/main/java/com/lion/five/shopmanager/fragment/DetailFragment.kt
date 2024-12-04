@@ -76,11 +76,7 @@ class DetailFragment: Fragment() {
             tvProductDetailStock.text = if (detailProduct.stock == 0) "재고 없음" else "재고 ${detailProduct.stock.toDecimalFormat()}"
             tvProductDetailReview.text = if (detailProduct.reviewCount == 0) "리뷰 없음" else "리뷰 ${detailProduct.reviewCount.toDecimalFormat()}"
 
-            lifecycleScope.launch {
-                checkMovieName { movieDetails ->
-                    tvProductDetailMovieInfo.text = movieDetails
-                }
-            }
+            checkMovieName { tvProductDetailMovieInfo.text = it }
         }
     }
 
