@@ -1,4 +1,4 @@
-# 🏪 ShopManager - 영화 굿즈 관리 프로그램
+# 🎞️ ShopManager - 영화 굿즈 관리 프로그램
 일정 수립 및 문서화는 Figma를 이용하였습니다.
 > https://www.figma.com/design/76ct7AROMUCHrdTMtLwiI5/%EC%87%BC%ED%95%91%EC%95%B1-%EC%8B%A4%EC%8A%B5?node-id=1-3699&t=DksZT39deQYcSrCI-1
 
