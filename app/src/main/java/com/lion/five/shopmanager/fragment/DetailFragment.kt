@@ -183,15 +183,4 @@ class DetailFragment: Fragment() {
             }
         })
     }
-
-    private fun updateMovieDetails(name: String, director: String, year: String, genre: String) {
-        val movieDetails = """
-        영화 이름: $name
-        감독: $director
-        제작년도: $year
-        장르: $genre
-    """.trimIndent()
-
-        binding.tvProductDetailDescription.text = "${binding.tvProductDetailDescription.text}\n\n$movieDetails"
-    }
 }

@@ -19,7 +19,8 @@ object ProductRepository {
             images = productModel.images,
             stock = productModel.stock,
             reviewCount = productModel.reviewCount,
-            isBest = productModel.isBest
+            isBest = productModel.isBest,
+            movieName = productModel.movieName
         )
 
         productDatabase.productDAO().insertProductData(productVO)
@@ -100,7 +101,8 @@ object ProductRepository {
             images = productModel.images,
             stock = productModel.stock,
             reviewCount = productModel.reviewCount,
-            isBest = productModel.isBest
+            isBest = productModel.isBest,
+            movieName = productModel.movieName
         )
 
         productDatabase.productDAO().updateProductData(productVO)
