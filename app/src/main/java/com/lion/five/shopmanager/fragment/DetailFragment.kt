@@ -14,6 +14,7 @@ import com.lion.five.shopmanager.adapter.ProductDetailAdapter
 import com.lion.five.shopmanager.data.model.Product
 import com.lion.five.shopmanager.data.repository.ProductRepository
 import com.lion.five.shopmanager.databinding.FragmentDetailBinding
+import com.lion.five.shopmanager.utils.FileUtil
 import com.lion.five.shopmanager.utils.popBackstack
 import com.lion.five.shopmanager.utils.replaceFragment
 import com.lion.five.shopmanager.utils.toDecimalFormat
@@ -114,6 +115,12 @@ class DetailFragment: Fragment() {
         materialAlertDialogBuilder.setPositiveButton("삭제"){ dialogInterface: DialogInterface, i: Int ->
             lifecycleScope.launch(Dispatchers.Main) {
                 withContext(Dispatchers.IO) {
+                    // 이미지 파일 삭제
+                    detailProduct.images.forEach { fileName ->
+                        FileUtil.deleteImage(requireContext(), fileName)
+                    }
+
+                    // Room DB에서 product삭제
                     product?.id?.let { ProductRepository.deleteProductById(requireContext(), it) }
                 }
                 popBackstack()
