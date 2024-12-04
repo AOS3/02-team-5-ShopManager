@@ -51,6 +51,10 @@ class SignInFragment : Fragment() {
         setupListeners()
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
     /*
     * 회원가입, 로그아웃, 로그인, 회원 탈퇴 버튼 리스트들 모음
     * */
