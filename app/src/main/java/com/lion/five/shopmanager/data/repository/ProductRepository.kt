@@ -18,7 +18,8 @@ object ProductRepository {
             images = productModel.images,
             stock = productModel.stock,
             reviewCount = productModel.reviewCount,
-            isBest = productModel.isBest
+            isBest = productModel.isBest,
+            movieName = productModel.movieName
         )
 
         productDatabase.productDAO().insertProductData(productVO)
@@ -40,7 +41,8 @@ object ProductRepository {
                 stock = vo.stock,
                 reviewCount = vo.reviewCount,
                 isBest = vo.isBest,
-                createAt = vo.createAt
+                createAt = vo.createAt,
+                movieName = vo.movieName
             )
         }
     }
@@ -69,7 +71,8 @@ object ProductRepository {
                 stock = it.stock,
                 reviewCount = it.reviewCount,
                 isBest = it.isBest,
-                createAt = it.createAt
+                createAt = it.createAt,
+                movieName = it.movieName
             )
         }
     }
@@ -97,12 +100,14 @@ object ProductRepository {
             images = productModel.images,
             stock = productModel.stock,
             reviewCount = productModel.reviewCount,
-            isBest = productModel.isBest
+            isBest = productModel.isBest,
+            movieName = productModel.movieName
         )
 
         productDatabase.productDAO().updateProductData(productVO)
     }
 
+    // 상품 정보 검색
     fun searchProductByName(context: Context, productName: String): MutableList<Product> {
         // 데이터베이스 객체를 가져온다.
         val productDatabase = ProductDatabase.getInstance(context)
@@ -126,12 +131,35 @@ object ProductRepository {
                     stock = vo.stock,
                     reviewCount = vo.reviewCount,
                     isBest = vo.isBest,
-                    createAt = vo.createAt
+                    createAt = vo.createAt,
+                    movieName = vo.movieName
                 )
                 productModelList.add(productModel)
             }
         }
 
         return productModelList
+    }
+
+    // 인기상품을 가져오는 메서드
+    fun getBestProducts(context: Context, limit: Int): List<Product> {
+        // Room DB에서 isBest가 true인 상품을 가져옵니다.
+        val productDao = ProductDatabase.getInstance(context).productDAO()
+        val voList = productDao.selectBestProducts(limit)
+        return voList.map { vo ->
+            Product(
+                id = vo.id,
+                name = vo.name,
+                price = vo.price,
+                type = vo.type,
+                description = vo.description,
+                images = vo.images,
+                stock = vo.stock,
+                reviewCount = vo.reviewCount,
+                isBest = vo.isBest,
+                createAt = vo.createAt,
+                movieName = vo.movieName
+            )
+        }
     }
 }

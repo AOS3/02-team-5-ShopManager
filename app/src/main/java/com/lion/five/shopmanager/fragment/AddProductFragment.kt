@@ -162,7 +162,8 @@ class AddProductFragment : Fragment(), OnDeleteClickListener {
                 stock = stock,
                 type = type,
                 images = savedImageFiles,
-                reviewCount = 0
+                reviewCount = 0,
+                movieName = ""
             )
 
             lifecycleScope.launch(Dispatchers.IO) {

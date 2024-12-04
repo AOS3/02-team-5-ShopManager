@@ -6,6 +6,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.lion.five.shopmanager.databinding.ItemProductDetailImageBinding
 import com.lion.five.shopmanager.utils.FileUtil
+import com.lion.five.shopmanager.utils.loadImage
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class ProductDetailAdapter : RecyclerView.Adapter<ProductDetailAdapter.ViewHolder>() {
     private var imageList = listOf<String>()
@@ -34,16 +39,19 @@ class ProductDetailAdapter : RecyclerView.Adapter<ProductDetailAdapter.ViewHolde
     class ViewHolder(private val binding: ItemProductDetailImageBinding): RecyclerView.ViewHolder(binding.root) {
 
         fun bind(fileName: String) {
-            itemView.post {
-                Thread {
-                    val imageFile = FileUtil.loadImageFile(itemView.context, fileName)
-                    val options = BitmapFactory.Options().apply { inSampleSize = 4 }
-                    val bitmap = BitmapFactory.decodeFile(imageFile.absolutePath, options)
+            with(binding) {
+                ivProductDetailImage.tag = fileName
+                CoroutineScope(Dispatchers.IO).launch {
+                    val bitmap = FileUtil.loadImageFile(itemView.context, fileName)
+                        .loadImage()
 
-                    itemView.post {
-                        binding.ivProductDetailImage.setImageBitmap(bitmap)
+                    withContext(Dispatchers.Main) {
+                        // 비동기 이미지 로딩 중 뷰가 재사용된 경우를 체크
+                        if (ivProductDetailImage.tag == fileName) {
+                            ivProductDetailImage.setImageBitmap(bitmap)
+                        }
                     }
-                }.start()
+                }
             }
         }
     }

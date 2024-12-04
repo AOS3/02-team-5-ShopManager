@@ -26,7 +26,6 @@ import com.lion.five.shopmanager.data.repository.ProductRepository
 import com.lion.five.shopmanager.databinding.FragmentEditProductBinding
 import com.lion.five.shopmanager.listener.OnDeleteClickListener
 import com.lion.five.shopmanager.utils.FileUtil
-import com.lion.five.shopmanager.utils.clearAccount
 import com.lion.five.shopmanager.utils.popBackstack
 import com.lion.five.shopmanager.utils.showMessage
 import kotlinx.coroutines.Dispatchers
@@ -201,16 +200,14 @@ class EditProductFragment : Fragment(), OnDeleteClickListener {
         }
 
         // Product 객체 생성
-        val newProduct = Product(
-            id = product!!.id,
+        val newProduct = product!!.copy(
             name = name,
             description = description,
             price = price,
             stock = stock,
             type = type,
             images = savedImageFiles,
-            reviewCount = 0
-        )
+            )
 
         // 코루틴으로 DB 저장 처리
         lifecycleScope.launch(Dispatchers.IO) {
@@ -385,4 +382,5 @@ class EditProductFragment : Fragment(), OnDeleteClickListener {
             }
             .show()
     }
+
 }

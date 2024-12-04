@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
@@ -11,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import com.lion.five.shopmanager.MainActivity
 import com.lion.five.shopmanager.databinding.FragmentSignInBinding
 import com.lion.five.shopmanager.utils.clearAccount
+import com.lion.five.shopmanager.utils.clearFocusAndHideKeyboard
 import com.lion.five.shopmanager.utils.getAccount
 import com.lion.five.shopmanager.utils.hideKeyboard
 import com.lion.five.shopmanager.utils.isLogin
@@ -58,6 +60,13 @@ class SignInFragment : Fragment() {
     * */
     private fun setupListeners() {
         with(binding) {
+            root.setOnTouchListener { v, event ->
+                if (event.action == MotionEvent.ACTION_DOWN) {
+                    v.clearFocusAndHideKeyboard()
+                }
+                true
+            }
+
             // 회원가입: 회원가입 화면으로 전환
             btnLoginRegister.setOnClickListener {
                 replaceFragment(SignUpFragment(), "SignUpFragment")
@@ -152,7 +161,7 @@ class SignInFragment : Fragment() {
     * */
     private fun delayTime() {
         viewLifecycleOwner.lifecycleScope.launch {
-            delay(200)
+            delay(500)
         }
     }
 
